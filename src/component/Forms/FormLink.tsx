@@ -1,0 +1,59 @@
+import { useContext } from "react";
+import { SectionContext, SectionDataContext } from "../../SectionData/Context";
+import { ImCancelCircle } from "react-icons/im";
+import { FormLinkInput } from "./FormComponents";
+
+type FormLinkProps =  {
+    activeItem: number;
+}
+
+const FormLink = ({activeItem}: FormLinkProps) => {
+
+    const { sectionState, activeSection, dispatch } = useContext(SectionDataContext) as SectionContext;
+    
+    const handleLinkInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number)=>{
+        const { name, value } = e.currentTarget;
+        dispatch({type:"LINK_INPUT", data: {activeSection: activeSection, activeItem:activeItem, name:name, value:value, index:index}});
+    }
+
+    const handleAddLink = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.preventDefault();
+        console.log("hi");
+        dispatch({type: "ADD_LINK", data: {activeSection: activeSection, activeItem:activeItem}});
+    }
+
+    const handleRemoveLink = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number,) => {
+        e.preventDefault();
+        dispatch({type: "REMOVE_LINK", data:{ activeSection: activeSection, activeItem:activeItem, index:index }})
+    }
+
+
+  return (
+    <div className="flex flex-col my-4 gap-4 w-full">
+        <div className="flex flex-row gap-5 items-center">
+            <label className="mb-2 text-xl font-medium  text-gray-900 dark:text-white">Link</label>
+            <button className="w-fit p-1 text-sm border-1 rounded-lg bg-secondary text-white cursor-pointer"  onClick={e => handleAddLink(e)}>
+            Add Link  
+            </button>
+        </div>
+        {(
+            activeItem !== -1
+                ? sectionState[activeSection][activeItem].links
+                : sectionState[activeSection].links
+            ).map((link: any, index: number) => (
+            <div key={index} className="flex items-center gap-5 text-2xl">
+                <FormLinkInput linkName={link.linkName} link={link.link} index={index} handleLinkInput={handleLinkInput} />
+                <button onClick={(e) => handleRemoveLink(e, index)}>
+                <ImCancelCircle />
+                </button>
+            </div>
+        ))}
+    </div>
+  )
+}
+
+export default FormLink;
+
+
+
+

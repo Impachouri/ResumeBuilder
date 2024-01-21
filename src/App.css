@@ -1,0 +1,154 @@
+/* App.tsx */
+.app {
+  display: flex;
+  width: 100%;
+}
+
+.resume-builder-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  border-right: 0.2rem solid #ddd; 
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.section-heading-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 2rem;
+}
+
+
+
+/* ResumeSection.tsx */
+
+.resume-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding: 0.8rem;
+  border: 0.1rem solid #ccc; 
+}
+
+.resume-section > button{
+  background: none;
+  border: none; 
+  cursor: pointer;
+}
+
+.resume-entry {
+  flex: 1;
+  padding: 1rem;
+}
+
+.template-date {
+  display: flex;
+  flex-direction: row;
+}
+
+/* RenderSectionForm.tsx */
+
+
+
+/* SectionFormTemplate.tsx */
+
+
+
+/* ResumeSectionForm */
+
+/* CSS */
+.section-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-form-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+.section-form-header-heading {
+  text-transform: capitalize;
+}
+
+.section-chips {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.section-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 0.1rem solid;
+  border-radius: 3rem;
+  padding: 0.5rem;
+  height: fit-content; 
+}
+
+.remove-chip {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.active-chip {
+  border: 0.2rem solid #0078D4;
+}
+
+.section-form-body {
+  gap: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+}
+
+.form > label {
+  font-size: 150%;
+}
+
+.form > input {
+  width: 60%;
+  height: 2.5rem;
+}
+
+.form-textarea > textarea {
+  height: 10rem;
+}
+
+.form-action {
+  display: flex;
+  justify-content: flex-end;
+  gap:2rem;
+  margin: 2.5rem;
+}
+
+.form-action > button {
+  padding: 0.2rem;
+}
+
+
+.editor-toolbar {
+  margin-bottom: 10px;
+}
+
+.editor-toolbar button {
+  margin-right: 5px;
+}
+
+.editor-content {
+  border: 1px solid #ccc;
+  padding: 5px;
+  min-height: 100px;
+  overflow: auto;
+}
