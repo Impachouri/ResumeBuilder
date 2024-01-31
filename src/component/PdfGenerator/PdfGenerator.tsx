@@ -1,50 +1,72 @@
 import { useReactToPrint } from 'react-to-print';
 import { FaArrowDown } from "react-icons/fa";
-import { MdOutlineCancel } from "react-icons/md";   
-import './PdfGenerator.css'
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const PdfGenerator  = ({resumeRef}:any) => {
-    const [pdfname, setPdfName] = useState('resume');
-    const [download, setDownload] = useState(false);
+const PdfGenerator: React.FC<{ resumeRef: React.RefObject<HTMLElement> }> = ({ resumeRef }) => {
+  const [pdfname, setPdfName] = useState('resume');
+  const [download, setDownload] = useState(false);
+  const downloadRef = useRef(null);
 
-    const handlePrint = useReactToPrint({
-        content: () => resumeRef.current,
-      });
+  const handlePrint = useReactToPrint({
+    content: () => resumeRef.current,
+  }
+  );
 
-    // const handleGeneratePdf = () => {
-    //     const doc = new jsPDF({
-    //         format: 'a4',
-    //         unit: 'pt',
-    //     });
+  const handleDownload = () => {
+    handlePrint();
+    setDownload(false);
+  };
 
-    //     doc.setFont('Inter-Regular', 'normal');
-
-    //     doc.html(resumeRef.current, {
-    //         async callback(doc) {
-    //             doc.save(pdfname);
-    //         },
-    //     });
-    //     setDownload((preValue)=>!preValue);
-    //     setPdfName('resume');
-    // };
-
-
+  useEffect(() => {
+    const inputRef = downloadRef.current as HTMLInputElement | null;
+    if (inputRef) {
+      inputRef.focus();
+    }
+  }, [download]);
 
   return (
     <>
-        <div className="fixed top-[92%] left-[92%]">
-            <button className="pdf-generator-button" onClick={() => setDownload((preValue)=>!preValue)}><FaArrowDown /></button>
-        </div>
-        {
-            download &&
-                <div className="pdf-generator-modal">
-                    <button className="pdf-cancel-button" onClick={() => setDownload((preValue)=>!preValue) }><MdOutlineCancel size={25}/></button>
-                    <label htmlFor="pdf-name" className="pdf-name">Name the File</label>
-                    <input type="text" name="pdf-name" value={pdfname} onChange={(e)=>setPdfName(e.target.value)}/>
-                    <button onClick={handlePrint} className="pdf-save">Save</button>
+      <div className="fixed top-[92%] left-[92%]">
+        <button className="grid place-items-center w-9 h-9 rounded-full bg-[#0078D4] text-white cursor-pointer" onClick={() => setDownload((preValue) => !preValue)}><FaArrowDown /></button>
+      </div>
+      {download ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-2xl font-semibold">
+                    Name the File
+                  </h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-2xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setDownload(false)}
+                  >
+                    <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
                 </div>
-        }
+                <div className="m-5">
+                  <input ref={downloadRef} className="h-12" type="text" name="pdf-name" value={pdfname} onChange={(e) => setPdfName(e.target.value)} />
+                </div>
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={handleDownload}
+                  >
+                    Download
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
     </>
   )
 }

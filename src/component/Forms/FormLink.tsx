@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { SectionContext, SectionDataContext } from "../../SectionData/Context";
 import { ImCancelCircle } from "react-icons/im";
 import { FormLinkInput } from "./FormComponents";
+import { SectionDataType, link } from "../../SectionData/DefaultState";
 
 type FormLinkProps =  {
     activeItem: number;
@@ -16,13 +17,13 @@ const FormLink = ({activeItem}: FormLinkProps) => {
         dispatch({type:"LINK_INPUT", data: {activeSection: activeSection, activeItem:activeItem, name:name, value:value, index:index}});
     }
 
-    const handleAddLink = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleAddLink = ( e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         console.log("hi");
         dispatch({type: "ADD_LINK", data: {activeSection: activeSection, activeItem:activeItem}});
     }
 
-    const handleRemoveLink = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number,) => {
+    const handleRemoveLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number,) => {
         e.preventDefault();
         dispatch({type: "REMOVE_LINK", data:{ activeSection: activeSection, activeItem:activeItem, index:index }})
     }
@@ -38,9 +39,9 @@ const FormLink = ({activeItem}: FormLinkProps) => {
         </div>
         {(
             activeItem !== -1
-                ? sectionState[activeSection][activeItem].links
-                : sectionState[activeSection].links
-            ).map((link: any, index: number) => (
+                ? (sectionState[activeSection] as SectionDataType['experience'] | SectionDataType['education'] | SectionDataType['projects'])[activeItem].links
+                : (sectionState[activeSection] as {links:link[]}).links
+            ).map((link: link, index: number) => (
             <div key={index} className="flex items-center gap-5 text-2xl">
                 <FormLinkInput linkName={link.linkName} link={link.link} index={index} handleLinkInput={handleLinkInput} />
                 <button onClick={(e) => handleRemoveLink(e, index)}>

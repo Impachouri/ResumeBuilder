@@ -1,5 +1,6 @@
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useState } from "react";
-import { SectionDataAction, SectionDataType,  useSectionReducers } from "./Reducer";
+import { SectionDataAction, useSectionReducers } from "./Reducer";
+import { SectionDataType } from "./DefaultState";
 
 export type SectionContext = {
     sectionState : SectionDataType;

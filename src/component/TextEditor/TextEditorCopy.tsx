@@ -1,10 +1,10 @@
-import React from "react";
+// import React from "react";
 import 'quill/dist/quill.snow.css'
 import ReactQuill from 'react-quill'
 
 const TextEditor = () => {
   
-  var modules = {
+  const modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
       ["bold", "italic", "underline", "strike", "blockquote"],
@@ -21,14 +21,14 @@ const TextEditor = () => {
     ]
   };
 
-  var formats = [
+  const formats = [
     "header", "height", "bold", "italic",
     "underline", "strike", "blockquote",
     "list", "color", "bullet", "indent",
     "link", "image", "align", "size",
   ];
 
-  const handleProcedureContentChange = (content) => {
+  const handleProcedureContentChange = (content:string) => {
     console.log("content---->", content);
   };
 

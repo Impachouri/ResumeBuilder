@@ -4,6 +4,7 @@ import  { SectionContext, SectionDataContext } from '../../SectionData/Context';
 import DOMPurify from 'dompurify';
 import { CiLink } from "react-icons/ci";
 import { v4 as uuidv4 } from 'uuid';
+import { EducationType, ExperienceType, ProjectType, link } from '../../SectionData/DefaultState';
 
 const defaultCss = {
   sectionContainer: "flex flex-col",
@@ -36,7 +37,7 @@ export const PersonalInfo: React.FC = () => {
         <p className="">{sectionState['personalInfo'].phone }</p>
         <span>|</span>
         <p className="">{sectionState['personalInfo'].email }</p>
-        {sectionState['personalInfo'].links.map((link:any, index:number) => 
+        {sectionState['personalInfo'].links.map((link:link) => 
           <div key={uuidv4()} className="flex gap-3">
             <span>|</span>
             <a href={link.link} className={`text-lg ${defaultCss.link}`} target="_blank">{link.linkName}</a>
@@ -56,7 +57,7 @@ export const PersonalInfo: React.FC = () => {
       <div className={defaultCss.sectionContainer}>
           <h4 className={defaultCss.sectionMainHeading}>PROFESSIONAL EXPERIENCE</h4>
           <div className={defaultCss.border}></div>
-          {sectionState['experience'].map((job, index) => (
+          {sectionState['experience'].map((job:ExperienceType) => (
             <div key={uuidv4()}>
               <div className="flex justify-between">
                 <h4 className={defaultCss.sectionSubHeading}>
@@ -83,7 +84,7 @@ export const PersonalInfo: React.FC = () => {
       <div className={defaultCss.sectionContainer}>
         <h4 className={defaultCss.sectionMainHeading}>PROJECTS</h4>
         <div className={defaultCss.border}></div>
-        {sectionState['projects'].map((project:any, index:number) => (
+        {sectionState['projects'].map((project:ProjectType) => (
           <div key={uuidv4()}>
             <div className="flex justify-between">
                 {project.liveLink ? (
@@ -104,7 +105,7 @@ export const PersonalInfo: React.FC = () => {
             { project.links 
               &&
               <div className="flex gap-2">
-                {project.links.map((link:any, index:number)=>
+                {project.links.map((link:link, index:number)=>
                   <a key={index} href={link.link} target="_blank" className={defaultCss.link}>{link.linkName}</a>
                 )} 
               </div>
@@ -123,7 +124,7 @@ export const PersonalInfo: React.FC = () => {
       <div className={defaultCss.sectionContainer}>
           <h4 className={defaultCss.sectionMainHeading}>EDUCATION</h4>
           <div className={defaultCss.border}></div>
-          {sectionState['education'].map((edu, index) => (
+          {sectionState['education'].map((edu:EducationType) => (
             <div key={uuidv4()} className="edu">
               <div className="flex justify-between">
                 <h4 className={defaultCss.sectionHeading}>
@@ -148,7 +149,7 @@ export const PersonalInfo: React.FC = () => {
           <h4 className={defaultCss.sectionMainHeading}>TECHNICAL SKILLS</h4>
           <div className={defaultCss.border}></div>
           <ul className="pl-[15px]">
-            {sectionState['skills'].split("\n").map((responsibility, idx) => (
+            {sectionState['skills'].split("\n").map((responsibility:string) => (
               <li key={uuidv4()}>{responsibility}</li>
             ))}
           </ul>

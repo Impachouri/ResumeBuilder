@@ -6,6 +6,7 @@ import { FormInput, FormButton } from "../../Forms/FormComponents";
 import FormLink from "../../Forms/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from 'uuid';
+import { ProjectType } from "../../../SectionData/DefaultState";
 
 const ProjectForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(SectionDataContext) as SectionContext;
@@ -17,7 +18,7 @@ const ProjectForm = () => {
     dispatch({type:"PROJECTS", data: {name:name, value:value, index:activeProject}});
   }
 
-  const handleTextArea= (content: any) => {
+  const handleTextArea= (content: string) => {
     dispatch({type:"PROJECTS", data: {name:"description", value:content, index:activeProject}});
   }
 
@@ -45,7 +46,7 @@ const ProjectForm = () => {
             {activeSection}
           </h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            { projects.map((_, index:number)=>(
+            { projects.map((_:ProjectType, index:number)=>(
               <div key={uuidv4()} className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2  ${activeProject === index && 'bg-secondary text-white font-medium'}`}>
               <button className="bg-none boder-0 cursor-pointer"  onClick={()=>setActiveProject(index)}>
                 Project {index+1} 

@@ -1,7 +1,5 @@
 import React from "react";
 import { IconType } from "react-icons";
-// import { FaCreditCard, FiMail, FiUser, FiUsers } from "react-icons/fi";
-import { FaPlus, FaMinus } from "react-icons/fa";
 
 interface ResumeSectionHeaderProps {
   sectionId: string;

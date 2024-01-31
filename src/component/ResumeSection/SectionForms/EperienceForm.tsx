@@ -5,6 +5,7 @@ import { FormButton, FormInput } from "../../Forms/FormComponents";
 import { MdCancel } from "react-icons/md"; 
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from 'uuid';
+import { ExperienceType } from "../../../SectionData/DefaultState";
 
 const ExperienceForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(SectionDataContext) as SectionContext;
@@ -16,7 +17,7 @@ const ExperienceForm = () => {
     dispatch({type:"EXPERIENCE", data: {name:name, value:value, index:activeExperience}});
   }
 
-  const handleTextArea= (content: any) => {
+  const handleTextArea= (content: string) => {
     const name = "responsibilities";
     const value = content;
 
@@ -47,7 +48,7 @@ const ExperienceForm = () => {
               {activeSection}
             </h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            { experiences.map((_:any, index:number)=>(
+            { experiences.map((_:ExperienceType, index:number)=>(
               <div key={uuidv4()} className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2  ${activeExperience === index && 'bg-secondary text-white font-medium'}`}>
                 <button className="bg-none boder-0 cursor-pointer" onClick={()=>setActiveExperience(index)}>
                   Experience {index+1} 
@@ -60,7 +61,7 @@ const ExperienceForm = () => {
           </div>
         </div>
         {experiences[activeExperience] &&
-          <form className="flex flex-col gap-7" key={uuidv4()}>
+          <form className="flex flex-col gap-7">
             <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 ">
               <FormInput type="text" label="Comapny" id="company" defaultValue={experiences[activeExperience]['company']} handleInputChange={ handleInputChange } />
               <FormInput type="text" label="Position" id="position" defaultValue={experiences[activeExperience]['position']} handleInputChange={ handleInputChange } />

@@ -1,6 +1,33 @@
-  type link = {
+  export type link = {
     linkName: string;
     link: string;
+  }
+
+  export type ExperienceType = {
+    company: string;
+    links: link[];
+    start_date: string;
+    end_date: string;
+    position: string;
+    responsibilities: string;
+  };
+
+  export type ProjectType = {
+    name: string;
+    liveLink: string;
+    start_date: string;
+    end_date: string;
+    description: string;
+    technologies: string;
+    links: link[]
+  }
+  export type EducationType =  {
+    institution: string;
+    links: link[],
+    start_date: string;
+    end_date: string;
+    degree: string;
+    grade: string;
   }
   
   export type SectionDataType = {
@@ -15,33 +42,11 @@
       profileSummary: string;
     };
   
-    experience: Array<{
-      company: string;
-      links: link[];
-      start_date: string;
-      end_date: string;
-      position: string;
-      responsibilities: string;
-    }>;
+    experience: Array<ExperienceType>
   
-    projects: Array<{
-      name: string;
-      liveLink: string;
-      start_date: string;
-      end_date: string;
-      description: string;
-      technologies: string;
-      links: link[]
-    }>;
+    projects: Array<ProjectType>;
   
-    education: Array<{
-      institution: string;
-      links: [],
-      start_date: string;
-      end_date: string;
-      degree: string;
-      grade: string;
-    }>;
+    education: Array<EducationType>;
   
     skills: string;
   

@@ -14,8 +14,8 @@ import { motion } from "framer-motion";
     leaveDelay: 100
   });
 
-  let mouseXPosition = mouse.clientX || 592;
-  let mouseYPosition = mouse.clientY || 48;
+  const mouseXPosition = mouse.clientX || 592;
+  const mouseYPosition = mouse.clientY || 48;
 
   // let mouseXPosition = mouse.clientX ;
   // let mouseYPosition = mouse.clientY ;

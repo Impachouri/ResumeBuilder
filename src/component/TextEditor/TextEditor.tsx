@@ -1,11 +1,18 @@
 
-import 'quill/dist/quill.snow.css'
-import ReactQuill from 'react-quill'
-// import { v4 as uuidv4 } from 'uuid';
+import 'quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
 
-const TextEditor = ({ label, id, value, handleTextArea}: any) => {
+type EditorProps = {
+  label: string;
+  id: string;
+  value: string;
+  handleTextArea: (content:string)=>void;
+}
+
+
+const TextEditor = ({ label, id, value, handleTextArea}: EditorProps) => {
   
-  var modules = {
+  const modules = {
     toolbar: [
       ["bold"],
       [{ list: "ordered" }, { list: "bullet" }],
@@ -21,20 +28,20 @@ const TextEditor = ({ label, id, value, handleTextArea}: any) => {
     ]
   };
 
-  var formats = [
+  const formats = [
     "header", "height", "bold", 
     "list", "color", "bullet", "indent",
     "link",
   ];
 
-  const handleProcedureContentChange = (content: any) => {
+  const handleProcedureContentChange = (content: string) => {
     handleTextArea(content)
   };
 
   return (
     <div className="form form-textarea" >
-        <label htmlFor={id} className="form-label">{label}</label>
-        <div style={{ display: "grid", justifyContent: "center"}} >
+        <label htmlFor={id} className="mb-2 text-xl font-medium text-gray-900 dark:text-white">{label}</label>
+        <div className="grid place-items-center m-5 mb-10" >
             <ReactQuill
               theme="snow"
               modules={modules}

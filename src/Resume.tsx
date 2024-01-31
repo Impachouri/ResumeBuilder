@@ -9,11 +9,11 @@ import { IconType } from "react-icons";
 import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
-import { v4 as uuidv4 } from 'uuid';
 import './App.css';
+import { SectionDataType } from './SectionData/DefaultState';
 
 export interface ResumeSectionData {
-  id: string;
+  id: keyof SectionDataType;
   title: string;
   component: React.ReactNode;
   order: number;
@@ -41,17 +41,18 @@ const Resume: React.FC = () => {
   const fontFamilyOption:string[] = [ 'font-sans', 'font-serif', 'font-mono' ];
   const colorOptions = ['#000000', '#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#2563EB'];
 
-  const handleActiveSession = (sectionId: string) => {
-    setActiveSection((prevActiveSection) =>
-        prevActiveSection === sectionId ? "" : sectionId
-    )
-  }
+  const handleActiveSession = (sectionId: keyof SectionDataType) => {
+    setActiveSection((prevActiveSection: keyof SectionDataType) => {
+      return prevActiveSection === sectionId ? prevActiveSection : sectionId;
+    });
+  };
+  
 
-  const handleDrag = (ev:any) => {
+  const handleDrag = (ev: React.DragEvent<HTMLDivElement>) => {
     setDragId(ev.currentTarget.id);
   };
 
-  const handleDrop = (ev: any) => {
+  const handleDrop = (ev: React.DragEvent<HTMLDivElement>) => {
     const dragSection: ResumeSectionData | undefined = sections.find(
       (section) => section.id === dragId
     );
@@ -82,9 +83,9 @@ const Resume: React.FC = () => {
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {sections
             .sort((a,b) => a.order - b.order)
-            .map((section) =>(
+            .map((section, index) =>(
                 <ResumeSectionHeader
-                    key={uuidv4()}
+                    key={index}
                     sectionId={section.id}
                     sectionName={section.title}
                     handleDrag={handleDrag} 
