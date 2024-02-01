@@ -22,19 +22,19 @@ const Home = () => {
     >
     <div className="relative w-full h-screen flex flex-col items-center">
       <div className=" text-[#CBD5E1] h-screen font-black text-[150px] leading-none whitespace-nowrap">
-        <div className="h-[120px]">
+        <div className="h-[25vh]">
           <span className="inline-block animate-textScrolling">Elevate Transform&nbsp;</span>
           <span className="inline-block animate-textScrolling">Achieve Succeed&nbsp;</span>
         </div>
-        <div className="h-[120px]">
+        <div className="h-[25vh]">
           <span className="inline-block animate-textScrollingReverse">Shine Impress&nbsp;</span>
           <span className="inline-block animate-textScrollingReverse">Build Craft&nbsp;</span>
         </div>
-        <div className="h-[120px]">
+        <div className="h-[25vh]">
           <span className="inline-block animate-textScrolling">Accelerate Excel&nbsp;</span>
           <span className="inline-block animate-textScrolling">Dynamic Advance&nbsp;</span>
         </div>
-        <div className="h-[120px]">
+        <div className="h-[25vh]">
           <span className="inline-block animate-textScrollingReverse">Professionalism Strive&nbsp;</span>
           <span className="inline-block animate-textScrollingReverse">Master Rise&nbsp;</span>
         </div>

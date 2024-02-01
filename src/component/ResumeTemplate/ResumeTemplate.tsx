@@ -43,7 +43,6 @@ const ResumeTemplate: React.FC<ResumeTemplateProps> = ({sections}) => {
       style={{
         transformStyle: "preserve-3d",
       }}
-      // className="w-full p-5 border-2 rounded-2xl border-black"
       >
       {sections.map((section: ResumeSectionData) => (
         <div key={uuidv4()}>
