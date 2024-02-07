@@ -79,9 +79,6 @@ import { motion } from "framer-motion";
             <li className="py-2 px-3 rounded-xl hover:bg-[#7C3AED] hover:text-white text-black text-lg font-bold cursor-pointer">
               <Link to="resume">Resume</Link>  
             </li>
-            <li className="py-2 px-3  rounded-xl hover:bg-[#7C3AED] hover:text-white  text-black text-lg font-bold cursor-pointer">
-              About us
-            </li>
           </ul>
         </div>
         <Link
