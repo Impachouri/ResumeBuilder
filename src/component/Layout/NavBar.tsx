@@ -58,7 +58,7 @@ import { motion } from "framer-motion";
 
   return (
     
-      <nav ref={ref} className={`fixed rounded-lg flex items-center justify-between  mt-5 p-5 w-[90%] z-[999]`}>
+      <nav ref={ref} className={` ${location.pathname === "/resume" && 'bg-[#E2E8F0]'} fixed rounded-lg flex items-center justify-between  mt-5 p-5 w-[90%] z-[999]`}>
         <motion.div
             variants={variants}
             className="absolute w-full h-full"
