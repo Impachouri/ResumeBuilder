@@ -13,8 +13,11 @@ const PdfGenerator: React.FC<{ resumeRef: React.RefObject<HTMLElement> }> = ({ r
   );
 
   const handleDownload = () => {
-    handlePrint();
-    setDownload(false);
+    if(resumeRef){
+      handlePrint();
+      setDownload(false);
+      console.log("fill");
+    }
   };
 
   useEffect(() => {

@@ -83,8 +83,8 @@ const Resume: React.FC = () => {
   }
 
   return (
-    <div className="w-screen h-full text-black flex flex-col mt-[85px] lg:flex-row">
-      <div className="flex flex-col w-full lg:w-[50%] md: border-solid border-r-2 p-5 gap-5">
+    <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">
+      <div  className="flex flex-col w-full lg:w-[50%]  border-solid border-r-2 p-5 gap-5">
           <div className="grid gap-4 grid-cols-2  lg:grid-cols-4">
             {sections
             .sort((a,b) => a.order - b.order)
@@ -133,13 +133,10 @@ const Resume: React.FC = () => {
           </div>
           <RenderSectionForm />
       </div>
-      { display &&
-        <div style={{perspective:2000}} ref={resumeRef} className={`z-10 lg:hidden fixed flex-1 items-center justify-center bg-white rounded-2xl p-9 ${fontFamily} text-[${color}]`} >
-        <ResumeTemplate sections={sections} />
+      <div className="h-screen  overflow-y-scroll  w-[50%]">
+        <div ref={resumeRef} style={{perspective:2000}} className={`${display ? "absolute z-10 lg:hidden" : "lg:flex"} flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${color}]`}>
+          <ResumeTemplate sections={sections} />
         </div>
-      }
-      <div style={{perspective:2000}} ref={resumeRef} className={`flex-1 hidden lg:block items-center justify-center bg-white rounded-2xl p-9 ${fontFamily} text-[${color}]`} >
-        <ResumeTemplate sections={sections} />
       </div>
       <div className="z-50 lg:hidden fixed w-9 aspect-square grid place-items-center bg-[#0078D4] text-white rounded-full top-[92%] left-[10%] text-3xl">
         <button onClick={handleDisplay}>

@@ -1,5 +1,6 @@
 
 import 'quill/dist/quill.snow.css';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 type EditorProps = {
@@ -12,6 +13,8 @@ type EditorProps = {
 
 const TextEditor = ({ label, id, value, handleTextArea}: EditorProps) => {
   
+  const [editorContent, setEditorContent] = useState<string>(value);
+
   const modules = {
     toolbar: [
       ["bold"],
@@ -35,8 +38,15 @@ const TextEditor = ({ label, id, value, handleTextArea}: EditorProps) => {
   ];
 
   const handleProcedureContentChange = (content: string) => {
-    handleTextArea(content)
+    setEditorContent(content);
+    handleTextArea(content);
   };
+
+
+  useEffect(()=>{
+    // console.log(value);
+    setEditorContent(value);
+  }, [value])
 
   return (
     <div className="form form-textarea" >
@@ -49,7 +59,7 @@ const TextEditor = ({ label, id, value, handleTextArea}: EditorProps) => {
               placeholder="write your content ...."
               onChange={handleProcedureContentChange}
               style={{ height: "220px" }}
-              defaultValue={value}
+              defaultValue={editorContent}
               id={id}
             >
             </ReactQuill>

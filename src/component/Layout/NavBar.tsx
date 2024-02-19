@@ -16,10 +16,7 @@ import { motion } from "framer-motion";
 
   const mouseXPosition = mouse.clientX || 592;
   const mouseYPosition = mouse.clientY || 48;
-
-  // let mouseXPosition = mouse.clientX ;
-  // let mouseYPosition = mouse.clientY ;
-
+  
   const variants = {
     default: {
       opacity: 1,
@@ -61,7 +58,7 @@ import { motion } from "framer-motion";
 
   return (
     
-      <nav ref={ref} className={`fixed ${location.pathname === "/resume" && 'bg-[#E2E8F0]'} rounded-lg flex items-center justify-between  mt-5 px-5 pt-5 pb-10   w-[90%]  z-[999]`}>
+      <nav ref={ref} className={`fixed rounded-lg flex items-center justify-between  mt-5 p-5 w-[90%] z-[999]`}>
         <motion.div
             variants={variants}
             className="absolute w-full h-full"
@@ -76,18 +73,13 @@ import { motion } from "framer-motion";
             >
               <Link to="/">Home</Link>
             </li>
-            {/* <li className="py-2 px-3 rounded-xl hover:bg-[#7C3AED] hover:text-white text-black text-lg font-bold cursor-pointer">
-              <Link to="resume">Resume</Link>  
-            </li> */}
           </ul>
         </div>
         <Link
           to="resume" 
-          className="cursor-none pointer-events-auto p-3"
+          className="cursor-none pointer-events-auto p-3 z-50"
           onMouseEnter={()=>setCursorVariant("heading")}
           onMouseLeave={()=>setCursorVariant("default")}
-          // onMouseEnter={ MouseEnter }
-          // onMouseLeave={ MouseLeave }
         >
             <h2 
               className="text-4xl font-extrabold text-black"
