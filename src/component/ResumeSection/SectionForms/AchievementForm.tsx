@@ -14,7 +14,7 @@ const AchievementForm = () => {
   
   const handleTextArea= (content: string) => {
     dispatch({type:"ACHIEVEMENTS", data: {name:"achievements", value:content}});
-  }c
+  }
 
   return (
   <ErrorBoundary
