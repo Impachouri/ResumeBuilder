@@ -1,17 +1,23 @@
-import { ErrorBoundary } from "react-error-boundary";
 // import SectionFormTemplate, { FormFieldProps } from "./SectionFormTemplate";
+// import { FormTextArea } from "../../Forms/FormComponents";
+import { ErrorBoundary } from "react-error-boundary";
 import { useContext } from "react";
 import { SectionContext, SectionDataContext } from "../../../SectionData/Context";
-import { FormTextArea } from "../../Forms/FormComponents";
+import TextEditor from "../../TextEditor/TextEditor";
 
 const SkillForm = () => {
 
   const { sectionState, dispatch, activeSection } = useContext(SectionDataContext) as SectionContext;
   const skills = sectionState['skills'];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.currentTarget;
-    dispatch({type:"SKILLS", data: {name:name, value:value}});
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = e.currentTarget;
+  //   console.log(name, value)
+  //   dispatch({type:"SKILLS", data: {name:name, value:value}});
+  // }
+
+  const handleTextArea= (content: string) => {
+    dispatch({type:"SKILLS", data: {name:"responsibilities", value:content}});
   }
 
   return (
@@ -25,7 +31,8 @@ const SkillForm = () => {
             </h2>
         </div>
         <form className="flex flex-col gap-7">
-          <FormTextArea type="text" label="Responsibility" id="responsibilities" defaultValue={skills} handleInputChange={ handleInputChange } />
+          <TextEditor label="" id="responsibilities" value={skills} handleTextArea={ handleTextArea }/>
+          {/* <FormTextArea type="text" label="Responsibility" id="responsibilities" defaultValue={skills} handleInputChange={ handleInputChange } /> */}
         </form>
       </div>
     </ErrorBoundary>

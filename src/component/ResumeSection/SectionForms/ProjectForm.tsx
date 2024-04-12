@@ -67,7 +67,10 @@ const ProjectForm = () => {
               <FormInput type="month" label="End Date" id="end_date" defaultValue={projects[activeProject]['end_date']} handleInputChange={ handleInputChange } />
               <FormLink activeItem={activeProject}/>
             </div>
-            <TextEditor label="Description" id="description" value={projects[activeProject]['description']} handleTextArea={ handleTextArea }/>
+            { projects.map((project, index) => 
+              activeProject === index &&
+              <TextEditor key={index} label="Description" id="description" value={project['description']} handleTextArea={ handleTextArea }/>
+            )}
             <FormInput type="text" label="Technology" id="technologies" defaultValue={projects[activeProject]['technologies']} handleInputChange={ handleInputChange } />
             <FormButton label="Add" id="addProject" handleClick={ handleAdd } />
           </form>

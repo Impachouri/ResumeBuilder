@@ -2,16 +2,21 @@ import { useContext } from "react";
 import { SectionContext, SectionDataContext } from "../../../SectionData/Context";
 import { FormTextArea } from "../../Forms/FormComponents";
 import { ErrorBoundary } from "react-error-boundary";
+import TextEditor from "../../TextEditor/TextEditor";
 
 const AchievementForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(SectionDataContext) as SectionContext;
   const achievements = sectionState['achievements'];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.currentTarget;
-    dispatch({type:"ACHIEVEMENTS", data: {name:name, value:value}});
-  }
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = e.currentTarget;
+  //   dispatch({type:"ACHIEVEMENTS", data: {name:name, value:value}});
+  // }
   
+  const handleTextArea= (content: string) => {
+    dispatch({type:"ACHIEVEMENTS", data: {name:"achievements", value:content}});
+  }
+
   return (
   <ErrorBoundary
     fallback={<p>There was an error while submitting the form</p>}
@@ -23,8 +28,8 @@ const AchievementForm = () => {
         </h2>
       </div>
       <form className="flex flex-col gap-7">
-        
-      <FormTextArea type="text" label="Responsibility" id="responsibilities" defaultValue={achievements} handleInputChange={ handleInputChange } />
+      <TextEditor label="" id="achievements" value={achievements} handleTextArea={ handleTextArea }/> 
+      {/* <FormTextArea type="text" label="Responsibility" id="responsibilities" defaultValue={achievements} handleInputChange={ handleInputChange } /> */}
       </form>
     </div>
   </ErrorBoundary>

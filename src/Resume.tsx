@@ -26,7 +26,8 @@ const Resume: React.FC = () => {
   const [display, setDisplay] = useState<boolean>(false);
   const [dragId, setDragId] = useState <string | undefined> ();
   const [fontFamily, setFontFamily] = useState<string>('font-sans');
-  const [color, setColor] = useState<string>('#000000');
+  // const [color, setColor] = useState<string>('#000000');
+  const [fontSize, setFontSize] = useState<number>(10);
   const {activeSection, setActiveSection} = useContext(SectionDataContext) as SectionContext;
 
   
@@ -40,7 +41,7 @@ const Resume: React.FC = () => {
   ]);
 
   const fontFamilyOption:string[] = [ 'font-sans', 'font-serif', 'font-mono' ];
-  const colorOptions = ['#000000', '#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#2563EB'];
+  const fontOption = ['10', '12', '14', '16'];
 
   const handleActiveSession = (sectionId: keyof SectionDataType) => {
     setActiveSection((prevActiveSection: keyof SectionDataType) => {
@@ -84,7 +85,7 @@ const Resume: React.FC = () => {
 
   return (
     <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">
-      <div  className="flex flex-col w-full lg:w-[50%]  border-solid border-r-2 p-5 gap-5">
+      <div  className="flex flex-col w-full lg:w-[50%]  border-solid border-r-2 p-5 gap-5 h-screen  overflow-y-scroll">
           <div className="grid gap-4 grid-cols-2  lg:grid-cols-4">
             {sections
             .sort((a,b) => a.order - b.order)
@@ -101,7 +102,7 @@ const Resume: React.FC = () => {
                     />
             ))}
           </div>
-          <div className="flex flex-wrap gap-9 text-xl place-items-center">
+          <div className="flex flex-wrap gap-9 text-xl place-items-center ">
             <div className="flex gap-5">
               <label htmlFor="font-family" className="font-semibold">Font family</label>
               <select 
@@ -115,26 +116,39 @@ const Resume: React.FC = () => {
                 )}
               </select>
             </div>
-            <div className="flex gap-5 font-semibold place-items-center">
+            <div className="flex gap-5">
+              <label htmlFor="font-family" className="font-semibold">Font Options</label>
+              <select 
+                name="font-option" 
+                id="font-option"
+                className="rounded-md focus:outline-none focus:ring p-1"
+                onChange={(e)=> setFontSize(parseInt(e.target.value))}
+              >
+                {fontOption.map((font)=>
+                  <option key={font} value={font}>{font}</option>
+                )}
+              </select>
+            </div>
+            {/* <div className="flex gap-5 font-semibold place-items-center">
               <label htmlFor="color">Colors</label>
               <div className="flex gap-2 place-items-center">
-                {colorOptions.map((optionColor, index) => (
+                {fontOption.map((option, index) => (
                   <button
                     key={index}
                     className={`rounded-full border-2  ${
-                      color === optionColor ? 'w-9 h-9' : 'w-7 h-7'
+                      fontSize === option ? 'w-9 h-9' : 'w-7 h-7'
                     }`}
                     style={{ backgroundColor: optionColor }}
                     onClick={() => setColor(optionColor)}
                   />
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
           <RenderSectionForm />
       </div>
       <div className="h-screen  overflow-y-scroll  w-[50%]">
-        <div ref={resumeRef} style={{perspective:2000}} className={`${display ? "absolute z-10 lg:hidden" : "lg:flex"} flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${color}]`}>
+        <div ref={resumeRef} style={{perspective:2000}} className={`${display ? "absolute z-10 lg:hidden" : "lg:flex"} flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${fontSize}px] `}>
           <ResumeTemplate sections={sections} />
         </div>
       </div>

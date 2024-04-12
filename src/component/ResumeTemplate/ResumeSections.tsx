@@ -70,7 +70,7 @@ export const PersonalInfo: React.FC = () => {
               <h4 className={defaultCss.sectionHeading}>
                 {job.position}
               </h4>
-              <div className="pl-[15px]" dangerouslySetInnerHTML={{ __html: sanitizedHtml(job.responsibilities) }}>
+              <div className="pl-[15px] list-disc list-inside resume-order-list" dangerouslySetInnerHTML={{ __html: sanitizedHtml(job.responsibilities) }}>
               </div>
             </div>
           ))}
@@ -101,7 +101,7 @@ export const PersonalInfo: React.FC = () => {
                   <h4 >{changeDate(project.start_date)}</h4>-<h4>{changeDate(project.end_date)}</h4>
                 </div>
             </div>
-            <div className="pl-[15px]" dangerouslySetInnerHTML={{ __html: sanitizedHtml(project.description) }}></div>
+            <div className="pl-[15px] resume-order-list" dangerouslySetInnerHTML={{ __html: sanitizedHtml(project.description) }}></div>
             { project.links 
               &&
               <div className="flex gap-2">
@@ -148,11 +148,12 @@ export const PersonalInfo: React.FC = () => {
       <div className={defaultCss.sectionContainer}>
           <h4 className={defaultCss.sectionMainHeading}>TECHNICAL SKILLS</h4>
           <div className={defaultCss.border}></div>
-          <ul className="pl-[15px]">
+          <div className="pl-[15px] resume-order-list" dangerouslySetInnerHTML={{ __html: sanitizedHtml(sectionState['skills']) }}></div>
+          {/* <ul className="pl-[15px]">
             {sectionState['skills'].split("\n").map((responsibility:string) => (
               <li key={uuidv4()}>{responsibility}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
     )
   }
@@ -164,7 +165,8 @@ export const PersonalInfo: React.FC = () => {
       <div className={defaultCss.sectionContainer}>
         <h4 className={defaultCss.sectionMainHeading}>ACHIEVEMENTS</h4>
         <div className={defaultCss.border}></div>
-        <p>{sectionState['achievements']}</p>
+        <div className="pl-[15px] resume-order-list" dangerouslySetInnerHTML={{ __html: sanitizedHtml(sectionState['achievements']) }}></div>
+        {/* <p>{sectionState['achievements']}</p> */}
       </div>
     )
   }

@@ -68,7 +68,11 @@ const ExperienceForm = () => {
               <FormInput type="month" label="Start Date" id="start_date" defaultValue={experiences[activeExperience]['start_date']} handleInputChange={ handleInputChange } />
               <FormInput type="month" label="End Date" id="end_date" defaultValue={experiences[activeExperience]['end_date']} handleInputChange={ handleInputChange } />
             </div>
-            <TextEditor label="Responsibility" id="responsibilities" value={experiences[activeExperience]['responsibilities']} handleTextArea={ handleTextArea }/>
+            { experiences.map((experience, index) => 
+              activeExperience === index &&
+              <TextEditor key={index} label="Description" id="description" value={experience['responsibilities']} handleTextArea={ handleTextArea }/>
+            )}
+            {/* <TextEditor label="Responsibility" id="responsibilities" value={experiences[activeExperience]['responsibilities']} handleTextArea={ handleTextArea }/> */}
             <FormButton label="Add" id="addExperience" handleClick={ handleAdd } />
           </form>
         }

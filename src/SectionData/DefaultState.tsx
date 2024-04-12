@@ -121,3 +121,6 @@
     skills: "Programming Languages: C, C++, Javascript, Typescript, Python. \n Web Technologies: HTML, CSS, Node.js, React.js, Next.js, Express.js, Nest.js, Django.\n Databases: MongoDB, SQL.\nTools & Technologies: Git, Github, Visual Studio, Postman, Docker, WebSokcet.",
     achievements: "4TH Rank in Webster (Avishkar Event of MNNIT).",
   };
+
+
+  
