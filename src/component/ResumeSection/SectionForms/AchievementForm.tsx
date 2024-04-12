@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { SectionContext, SectionDataContext } from "../../../SectionData/Context";
-import { FormTextArea } from "../../Forms/FormComponents";
 import { ErrorBoundary } from "react-error-boundary";
 import TextEditor from "../../TextEditor/TextEditor";
 
@@ -15,7 +14,7 @@ const AchievementForm = () => {
   
   const handleTextArea= (content: string) => {
     dispatch({type:"ACHIEVEMENTS", data: {name:"achievements", value:content}});
-  }
+  }c
 
   return (
   <ErrorBoundary
