@@ -6,7 +6,7 @@ import RenderSectionForm from './component/ResumeSection/RenderSectionForm';
 import { SectionContext, SectionDataContext } from './SectionData/Context';
 import PdfGenerator from './component/PdfGenerator/PdfGenerator';
 import { IconType } from "react-icons";
-import { FaBriefcase, FaCode, FaUser, FaGraduationCap, FaEye } from "react-icons/fa";
+import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
 import './App.css';
@@ -23,10 +23,8 @@ export interface ResumeSectionData {
 const Resume: React.FC = () => {
 
   const resumeRef = useRef(null);
-  const [display, setDisplay] = useState<boolean>(false);
   const [dragId, setDragId] = useState <string | undefined> ();
   const [fontFamily, setFontFamily] = useState<string>('font-sans');
-  // const [color, setColor] = useState<string>('#000000');
   const [fontSize, setFontSize] = useState<number>(10);
   const {activeSection, setActiveSection} = useContext(SectionDataContext) as SectionContext;
 
@@ -78,10 +76,6 @@ const Resume: React.FC = () => {
       setSections(newSectionState);
     }
   };
-
-  const handleDisplay = () => {
-    setDisplay( preValue => !preValue)
-  }
 
   return (
     <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">
@@ -147,15 +141,10 @@ const Resume: React.FC = () => {
           </div>
           <RenderSectionForm />
       </div>
-      <div className="h-screen  overflow-y-scroll  w-[50%]">
-        <div ref={resumeRef} style={{perspective:2000}} className={`${display ? "absolute z-10 lg:hidden" : "lg:flex"} flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${fontSize}px] `}>
+      <div className="overflow-y-scroll lg:w-[50%] h-screen">
+        <div ref={resumeRef} style={{perspective:2000}} className={`flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${fontSize}px] `}>
           <ResumeTemplate sections={sections} />
         </div>
-      </div>
-      <div className="z-50 lg:hidden fixed w-9 aspect-square grid place-items-center bg-[#0078D4] text-white rounded-full top-[92%] left-[10%] text-3xl">
-        <button onClick={handleDisplay}>
-          <FaEye />
-        </button>
       </div>
       <PdfGenerator resumeRef={resumeRef}/>
     </div>
