@@ -4,12 +4,12 @@ import { MdCancel } from "react-icons/md";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../SectionData/Context";
+} from "../../../context/AppContext";
 import { FormInput, FormButton, FormChecked } from "../../Forms/FormComponents";
 import FormLink from "../../Forms/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
-import { ProjectType } from "../../../SectionData/DefaultState";
+import { ProjectType } from "../../../context/DefaultState";
 
 const ProjectForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(

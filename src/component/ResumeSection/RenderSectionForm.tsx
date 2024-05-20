@@ -5,15 +5,11 @@ import SkillForm from "./SectionForms/SkillForm";
 import AchievementForm from "./SectionForms/AchievementForm";
 import EducationForm from "./SectionForms/EductionForm";
 import { useContext } from "react";
-import { SectionContext, SectionDataContext } from "../../SectionData/Context";
-
-
-
+import { SectionContext, SectionDataContext } from "../../context/AppContext";
 
 const RenderSectionForm = () => {
-
   const { activeSection } = useContext(SectionDataContext) as SectionContext;
-    
+
   const renderFormComponent = (sectionId: string) => {
     switch (sectionId) {
       case "personalInfo":
@@ -33,19 +29,16 @@ const RenderSectionForm = () => {
     }
   };
 
-
   return (
-        <>
-            {activeSection ?
-            <div className="section-form-component">
-                <div className="section-heading"></div>
-                {renderFormComponent(activeSection)}
-            </div>
-            :
-            null
-            }
-        </>
-  )
-}
+    <>
+      {activeSection ? (
+        <div className="section-form-component">
+          <div className="section-heading"></div>
+          {renderFormComponent(activeSection)}
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 export default RenderSectionForm;

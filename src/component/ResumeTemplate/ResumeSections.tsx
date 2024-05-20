@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SectionContext, SectionDataContext } from "../../SectionData/Context";
+import { SectionContext, SectionDataContext } from "../../context/AppContext";
 import DOMPurify from "dompurify";
 import { CiLink } from "react-icons/ci";
 import { v4 as uuidv4 } from "uuid";
@@ -8,7 +8,7 @@ import {
   ExperienceType,
   ProjectType,
   link,
-} from "../../SectionData/DefaultState";
+} from "../../context/DefaultState";
 
 const defaultCss = {
   sectionContainer: "flex flex-col",

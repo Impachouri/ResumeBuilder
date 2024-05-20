@@ -3,12 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../SectionData/Context";
+} from "../../../context/AppContext";
 import { FormButton, FormChecked, FormInput } from "../../Forms/FormComponents";
 import { MdCancel } from "react-icons/md";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
-import { ExperienceType } from "../../../SectionData/DefaultState";
+import { ExperienceType } from "../../../context/DefaultState";
 
 const ExperienceForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(
