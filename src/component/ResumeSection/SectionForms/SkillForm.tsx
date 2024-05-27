@@ -5,7 +5,7 @@ import { useContext } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
+} from "../../../context/appContext/AppContext";
 import TextEditor from "../../TextEditor/TextEditor";
 
 const SkillForm = () => {

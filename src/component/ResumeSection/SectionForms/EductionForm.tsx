@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
+} from "../../../context/appContext/AppContext";
 import { FormInput, FormButton, FormChecked } from "../../Forms/FormComponents";
 import { MdCancel } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";

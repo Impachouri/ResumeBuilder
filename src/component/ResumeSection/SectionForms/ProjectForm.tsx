@@ -4,12 +4,11 @@ import { MdCancel } from "react-icons/md";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
+} from "../../../context/appContext/AppContext";
 import { FormInput, FormButton, FormChecked } from "../../Forms/FormComponents";
 import FormLink from "../../Forms/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
-import { ProjectType } from "../../../context/DefaultState";
 
 const ProjectForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(
@@ -58,8 +57,6 @@ const ProjectForm = () => {
     dispatch({ type: "REMOVE_PROJECT", data: { index: index } });
   };
 
-  useEffect(() => console.log(activeProject), [activeProject]);
-
   return (
     <ErrorBoundary
       fallback={<p>There was an error while submitting the form</p>}
@@ -68,7 +65,7 @@ const ProjectForm = () => {
         <div className="flex flex-wrap gap-6 mb-6">
           <h2 className="uppercase text-3xl font-bold">{activeSection}</h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            {projects.map((_: ProjectType, index: number) => (
+            {projects.map((_, index: number) => (
               <div
                 key={uuidv4()}
                 className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2  ${

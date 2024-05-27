@@ -5,7 +5,10 @@ import SkillForm from "./SectionForms/SkillForm";
 import AchievementForm from "./SectionForms/AchievementForm";
 import EducationForm from "./SectionForms/EductionForm";
 import { useContext } from "react";
-import { SectionContext, SectionDataContext } from "../../context/AppContext";
+import {
+  SectionContext,
+  SectionDataContext,
+} from "../../context/appContext/AppContext";
 
 const RenderSectionForm = () => {
   const { activeSection } = useContext(SectionDataContext) as SectionContext;
