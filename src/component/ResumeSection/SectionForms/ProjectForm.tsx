@@ -5,8 +5,12 @@ import {
   SectionContext,
   SectionDataContext,
 } from "../../../context/appContext/AppContext";
-import { FormInput, FormButton, FormChecked } from "../../Forms/FormComponents";
-import FormLink from "../../Forms/FormLink";
+import {
+  FormInput,
+  FormButton,
+  FormChecked,
+} from "../../AppForm/FormComponents";
+import FormLink from "../../AppForm/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
 

@@ -4,7 +4,11 @@ import {
   SectionContext,
   SectionDataContext,
 } from "../../../context/appContext/AppContext";
-import { FormButton, FormChecked, FormInput } from "../../Forms/FormComponents";
+import {
+  FormButton,
+  FormChecked,
+  FormInput,
+} from "../../AppForm/FormComponents";
 import { MdCancel } from "react-icons/md";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
