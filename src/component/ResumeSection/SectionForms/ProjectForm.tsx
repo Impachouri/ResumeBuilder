@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { MdCancel } from "react-icons/md";
 import {
   SectionContext,
