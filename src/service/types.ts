@@ -1,13 +1,20 @@
-type ApiResponsetype<T> = {
+type ApiResponseType<T> = {
   statusCode: number;
   data: T;
   message: string;
   success: boolean;
 };
 
-type FormDataType = {
+type SignInFormDataType = {
   email: string;
   password: string;
 };
 
-export type { FormDataType, ApiResponsetype };
+type SignUpFormDataType = {
+  fName: string;
+  lName: string;
+  email: string;
+  password: string;
+};
+
+export type { SignUpFormDataType, SignInFormDataType, ApiResponseType };
