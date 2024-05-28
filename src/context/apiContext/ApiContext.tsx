@@ -1,16 +1,16 @@
 import { ReactNode, createContext, useReducer, Dispatch, FC } from "react";
-import { ApiReducer } from "./ApiReducer";
 import { ApiActionType, ApiStateType } from "./types";
 import { UserType } from "../userContext/types";
 import { SectionDataType } from "../appContext/types";
 import initialState from "./InitialState";
+import apiReducer from "./apiReducer";
 
 type ApiDataProviderProps = {
   children: ReactNode;
 };
 
 const ApiContext = createContext<{
-  state: ApiStateType<SectionDataType | UserType>;
+  state: ApiStateType<UserType | SectionDataType>;
   dispatch: Dispatch<ApiActionType<SectionDataType | UserType>>;
 }>({
   state: initialState,
@@ -18,7 +18,7 @@ const ApiContext = createContext<{
 });
 
 const ApiDataProvider: FC<ApiDataProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(ApiReducer, initialState);
+  const [state, dispatch] = useReducer(apiReducer, initialState);
 
   return (
     <ApiContext.Provider value={{ state, dispatch }}>

@@ -1,24 +1,85 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import notification from "../utils/notification";
+import useRedirectToPath from "../utils/redirectToPath";
+import {
+  SectionContext,
+  SectionDataContext,
+} from "../context/appContext/AppContext";
+
+const questions = [
+  {
+    question: "Which profile are you aiming to build your resume for?",
+    name: "profile",
+    value: "",
+  },
+  { question: "Enter your Email?", name: "email", value: "" },
+  { question: "Enter your Mobile Number", name: "phone", value: "" },
+];
 
 const Createresume = () => {
+  const notify = notification();
+  const navigate = useRedirectToPath();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [questionAnswer, setQuestionAnswer] = useState(questions);
+  const { dispatch } = useContext(SectionDataContext) as SectionContext;
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.currentTarget;
+    setQuestionAnswer((prevQuestionAnswer) => {
+      const updatedQuestionAnswer = [...prevQuestionAnswer];
+      updatedQuestionAnswer[currentQuestionIndex] = {
+        ...updatedQuestionAnswer[currentQuestionIndex],
+        value: value,
+      };
+      return updatedQuestionAnswer;
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (questionAnswer[currentQuestionIndex].value === "") {
+        notify("Please Enter profile", "ERROR");
+      } else {
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else if (currentQuestionIndex === questions.length - 1) {
+          questionAnswer.forEach((question) => {
+            dispatch({
+              type: "PERSONAL_INFO",
+              data: { name: question.name, value: question.value },
+            });
+          });
+          navigate("/resume");
+        }
+      }
+    }
+  };
+
   return (
-    <div className="w-screen h-screen text-black text-5xl flex items-center justify-around p-96">
-      <label htmlFor="profile">Select Profile :</label>
-      <select
-        name="profile"
-        id="profile"
-        className="p-7 rounded-2xl focus:ring"
-      >
-        <option value="frontend">Frontend</option>
-        <option value="backend">Backend</option>
-        <option value="fullstack">Full Stack</option>
-      </select>
-      <Link
-        to="/resume"
-        className="py-2 px-3 rounded-xl text-white  font-bold cursor-pointer transition ease-in-out delay-150 bg-[#7C3AED] hover:-translate-y-1 hover:scale-110 hover:bg-[#7C3AED] duration-300 "
-      >
-        Next
-      </Link>
+    <div className="w-screen h-screen text-black text-5xl flex flex-col items-center justify-around p-96 gap-28">
+      <span className="self-start">
+        {questionAnswer[currentQuestionIndex].question}
+      </span>
+      <div className="relative z-0 w-full group">
+        <input
+          onKeyDown={handleKeyDown}
+          onChange={handleInputChange}
+          type="email"
+          name={questionAnswer[currentQuestionIndex].name}
+          className="block py-5 px-0 w-full text-4xl font-bold text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  peer"
+          placeholder=""
+          value={questionAnswer[currentQuestionIndex].value}
+          required
+        />
+        <label
+          htmlFor={questionAnswer[currentQuestionIndex].name}
+          className="peer-focus:font-semibold absolute text-4xl text-gray-500 duration-300 transform -translate-y-14 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-14"
+        >
+          {`Type your ${questionAnswer[currentQuestionIndex].name} here`}
+        </label>
+      </div>
     </div>
   );
 };

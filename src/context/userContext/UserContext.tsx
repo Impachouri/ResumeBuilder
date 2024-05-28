@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, createContext, useReducer, FC } from "react";
 import initialState from "./InitialState";
-import UserReducer from "./UserReducer";
+import userReducer from "./userReducer";
 import { UserActionType, UserStateType } from "./types";
 
 type UserDataProviderProps = {
@@ -16,7 +16,7 @@ const UserContext = createContext<{
 });
 
 const UserDataProvider: FC<UserDataProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(UserReducer, initialState);
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>

@@ -1,12 +1,11 @@
 import { SectionDataType } from "../appContext/types";
-import { ApiStateType } from "./types";
 import { UserType } from "../userContext/types";
+import { ApiStateType } from "./types";
 
-const initialState: ApiStateType<SectionDataType | UserType> = {
+const initialState: ApiStateType<UserType | SectionDataType> = {
   loading: false,
   data: null,
   error: null,
-  actionType: null,
 };
 
 export default initialState;

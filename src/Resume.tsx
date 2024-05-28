@@ -21,7 +21,7 @@ import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
 import "./App.css";
 import { SectionDataType } from "./context/appContext/types";
-import { ApiContext } from "./context/apiContext/ApiContext";
+import { ApiContext } from "./context/apiContext/apiContext";
 // import { fetchResume } from "./service/appApi";
 
 export interface ResumeSectionData {
