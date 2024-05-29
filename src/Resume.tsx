@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ResumeTemplate from "./component/ResumeTemplate/ResumeTemplate";
 import ResumeSectionHeader from "./component/ResumeSection/ResumeSectionHeader";
 import {
@@ -10,14 +10,19 @@ import {
   TechnicalSkills,
 } from "./component/ResumeTemplate/ResumeSections";
 import RenderSectionForm from "./component/ResumeSection/RenderSectionForm";
-import { SectionContext, SectionDataContext } from "./context/AppContext";
+import {
+  SectionContext,
+  SectionDataContext,
+} from "./context/appContext/AppContext";
 import PdfGenerator from "./component/PdfGenerator/PdfGenerator";
 import { IconType } from "react-icons";
 import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
 import "./App.css";
-import { SectionDataType } from "./context/DefaultState";
+import { SectionDataType } from "./context/appContext/types";
+import { ApiContext } from "./context/apiContext/apiContext";
+// import { fetchResume } from "./service/appApi";
 
 export interface ResumeSectionData {
   id: keyof SectionDataType;
@@ -35,6 +40,8 @@ const Resume: React.FC = () => {
   const { activeSection, setActiveSection } = useContext(
     SectionDataContext
   ) as SectionContext;
+
+  const { state } = useContext(ApiContext);
 
   const [sections, setSections] = useState<ResumeSectionData[]>([
     {
@@ -118,6 +125,10 @@ const Resume: React.FC = () => {
       setSections(newSectionState);
     }
   };
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">

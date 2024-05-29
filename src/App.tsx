@@ -1,19 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./component/Layout/Layout";
-// import Form from './component/Forms/Form'
+import Layout from "./Layout/Layout";
 import Resume from "./Resume";
 import Home from "./Home";
-import Createresume from "./pages/createResume";
+import Createresume from "./pages/CreateResume";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}></Route>
-          <Route path="create" element={<Createresume />}></Route>
-          <Route path="resume" element={<Resume />}></Route>
-          <Route path="*" element={<Resume />}></Route>
+          <Route index element={<Home />} />
+          <Route path="create" element={<Createresume />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="resume" element={<Resume />} />
+          <Route path="*" element={<Resume />} />
         </Route>
       </Routes>
     </BrowserRouter>

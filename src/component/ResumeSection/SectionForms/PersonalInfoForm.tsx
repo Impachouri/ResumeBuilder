@@ -2,9 +2,9 @@ import { useContext } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
-import { FormInput, FormTextArea } from "../../Forms/FormComponents";
-import FormLink from "../../Forms/FormLink";
+} from "../../../context/appContext/AppContext";
+import { FormInput, FormTextArea } from "../../AppForm/FormComponents";
+import FormLink from "../../AppForm/FormLink";
 import { ErrorBoundary } from "react-error-boundary";
 
 const PersonalInfoForm = () => {

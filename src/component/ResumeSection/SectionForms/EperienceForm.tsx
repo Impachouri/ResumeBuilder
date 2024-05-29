@@ -3,12 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
-import { FormButton, FormChecked, FormInput } from "../../Forms/FormComponents";
+} from "../../../context/appContext/AppContext";
+import {
+  FormButton,
+  FormChecked,
+  FormInput,
+} from "../../AppForm/FormComponents";
 import { MdCancel } from "react-icons/md";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
-import { ExperienceType } from "../../../context/DefaultState";
 
 const ExperienceForm = () => {
   const { sectionState, dispatch, activeSection } = useContext(
@@ -72,7 +75,7 @@ const ExperienceForm = () => {
         <div className="flex flex-wrap gap-6 mb-6">
           <h2 className="uppercase text-3xl font-bold">{activeSection}</h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            {experiences.map((_: ExperienceType, index: number) => (
+            {experiences.map((_, index: number) => (
               <div
                 key={uuidv4()}
                 className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2  ${

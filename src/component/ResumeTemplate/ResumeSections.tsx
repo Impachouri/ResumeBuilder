@@ -1,14 +1,17 @@
-import { useContext } from "react";
-import { SectionContext, SectionDataContext } from "../../context/AppContext";
 import DOMPurify from "dompurify";
 import { CiLink } from "react-icons/ci";
 import { v4 as uuidv4 } from "uuid";
+import { useContext } from "react";
+import {
+  SectionContext,
+  SectionDataContext,
+} from "../../context/appContext/AppContext";
 import {
   EducationType,
   ExperienceType,
   ProjectType,
   link,
-} from "../../context/DefaultState";
+} from "../../context/appContext/types";
 
 const defaultCss = {
   sectionContainer: "flex flex-col",

@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { SectionDataAction, useSectionReducers } from "./AppReducer";
-import { SectionDataType } from "./DefaultState";
+import { SectionDataType } from "./types";
 
 export type SectionContext = {
   sectionState: SectionDataType;

@@ -4,9 +4,9 @@ import {
   ExperienceType,
   ProjectType,
   SectionDataType,
-  defaultState,
   link,
-} from "./DefaultState";
+} from "./types";
+import { defaultState } from "./InitialState";
 
 export type SectionDataAction =
   | {

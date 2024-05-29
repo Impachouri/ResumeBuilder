@@ -1,8 +1,13 @@
 import { useAnimate } from "framer-motion";
 import { MouseEventHandler, ReactNode, useRef } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+// import useRedirectToLogin from "./utils/redirectToLogin";
+// import { setInterceptor } from "./service/axios.config";
 
 const Home = () => {
+  // const redirecToLogin = useRedirectToLogin();
+  // setInterceptor(redirecToLogin);
+
   return (
     <MouseImageTrail
       renderImageBuffer={30}
@@ -20,31 +25,50 @@ const Home = () => {
         "photos/image10.jpg",
       ]}
     >
-    <div className="relative w-full h-screen flex flex-col items-center">
-      <div className=" text-[#CBD5E1] h-screen font-black text-[150px] leading-none whitespace-nowrap">
-        <div className="h-[25vh]">
-          <span className="inline-block animate-textScrolling">Elevate Transform&nbsp;</span>
-          <span className="inline-block animate-textScrolling">Achieve Succeed&nbsp;</span>
+      <div className="relative w-full h-screen flex flex-col items-center">
+        <div className=" text-[#CBD5E1] h-screen font-black text-[150px] leading-none whitespace-nowrap">
+          <div className="h-[25vh]">
+            <span className="inline-block animate-textScrolling">
+              Elevate Transform&nbsp;
+            </span>
+            <span className="inline-block animate-textScrolling">
+              Achieve Succeed&nbsp;
+            </span>
+          </div>
+          <div className="h-[25vh]">
+            <span className="inline-block animate-textScrollingReverse">
+              Shine Impress&nbsp;
+            </span>
+            <span className="inline-block animate-textScrollingReverse">
+              Build Craft&nbsp;
+            </span>
+          </div>
+          <div className="h-[25vh]">
+            <span className="inline-block animate-textScrolling">
+              Accelerate Excel&nbsp;
+            </span>
+            <span className="inline-block animate-textScrolling">
+              Dynamic Advance&nbsp;
+            </span>
+          </div>
+          <div className="h-[25vh]">
+            <span className="inline-block animate-textScrollingReverse">
+              Professionalism Strive&nbsp;
+            </span>
+            <span className="inline-block animate-textScrollingReverse">
+              Master Rise&nbsp;
+            </span>
+          </div>
         </div>
-        <div className="h-[25vh]">
-          <span className="inline-block animate-textScrollingReverse">Shine Impress&nbsp;</span>
-          <span className="inline-block animate-textScrollingReverse">Build Craft&nbsp;</span>
+        <div className="absolute top-[35%] left-0  text-black text-[80px] font-black ">
+          <span>Building Resumes</span>
+          <br />
+          <span>
+            Building <span className="text-primary">Future</span>
+          </span>
         </div>
-        <div className="h-[25vh]">
-          <span className="inline-block animate-textScrolling">Accelerate Excel&nbsp;</span>
-          <span className="inline-block animate-textScrolling">Dynamic Advance&nbsp;</span>
-        </div>
-        <div className="h-[25vh]">
-          <span className="inline-block animate-textScrollingReverse">Professionalism Strive&nbsp;</span>
-          <span className="inline-block animate-textScrollingReverse">Master Rise&nbsp;</span>
-        </div>
+        `
       </div>
-      <div className="absolute top-[35%] left-0  text-black text-[80px] font-black ">
-        <span>Building Resumes</span><br/>
-        <span>Building <span className="text-primary">Future</span>
-        </span>
-      </div>
-  `</div>
     </MouseImageTrail>
   );
 };
@@ -191,7 +215,6 @@ export default Home;
 //     "Images/1654105837150.jpg",
 //     "Images/1654105837192.jpg"
 //   ]}
-
 
 //     <div class="relative flex overflow-x-hidden">
 //   <div class="py-12 animate-marquee whitespace-nowrap">

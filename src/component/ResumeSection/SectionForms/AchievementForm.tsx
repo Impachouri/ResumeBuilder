@@ -2,7 +2,7 @@ import { useContext } from "react";
 import {
   SectionContext,
   SectionDataContext,
-} from "../../../context/AppContext";
+} from "../../../context/appContext/AppContext";
 import { ErrorBoundary } from "react-error-boundary";
 import TextEditor from "../../TextEditor/TextEditor";
 

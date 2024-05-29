@@ -1,8 +1,11 @@
 import { useContext } from "react";
-import { SectionContext, SectionDataContext } from "../../context/AppContext";
+import {
+  SectionContext,
+  SectionDataContext,
+} from "../../context/appContext/AppContext";
 import { ImCancelCircle } from "react-icons/im";
 import { FormLinkInput } from "./FormComponents";
-import { SectionDataType, link } from "../../context/DefaultState";
+import { SectionDataType, link } from "../../context/appContext/types";
 
 type FormLinkProps = {
   activeItem: number;
