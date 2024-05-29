@@ -1,6 +1,6 @@
-import { SectionDataType } from "./types";
+import { AppStateType } from "./types";
 
-export const defaultState: SectionDataType = {
+export const initialState: AppStateType = {
   personalInfo: {
     fname: "AMAN",
     lname: "PACHOURI",

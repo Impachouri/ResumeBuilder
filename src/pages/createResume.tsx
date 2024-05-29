@@ -1,10 +1,7 @@
 import { useContext, useState } from "react";
 import notification from "../utils/notification";
 import useRedirectToPath from "../utils/redirectToPath";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../context/appContext";
 
 const questions = [
   {
@@ -16,12 +13,12 @@ const questions = [
   { question: "Enter your Mobile Number", name: "phone", value: "" },
 ];
 
-const Createresume = () => {
+const CreateResume = () => {
   const notify = notification();
   const navigate = useRedirectToPath();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [questionAnswer, setQuestionAnswer] = useState(questions);
-  const { dispatch } = useContext(SectionDataContext) as SectionContext;
+  const { dispatch } = useContext(AppContext) as AppContextStateType;
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -84,4 +81,4 @@ const Createresume = () => {
   );
 };
 
-export default Createresume;
+export default CreateResume;

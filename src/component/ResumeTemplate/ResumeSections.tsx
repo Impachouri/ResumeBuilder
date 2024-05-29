@@ -3,16 +3,13 @@ import { CiLink } from "react-icons/ci";
 import { v4 as uuidv4 } from "uuid";
 import { useContext } from "react";
 import {
-  SectionContext,
-  SectionDataContext,
-} from "../../context/appContext/AppContext";
-import {
+  AppContext,
+  AppContextStateType,
   EducationType,
   ExperienceType,
   ProjectType,
-  link,
-} from "../../context/appContext/types";
-
+  LinkType,
+} from "../../context/appContext";
 const defaultCss = {
   sectionContainer: "flex flex-col",
   sectionMainHeading: "flex justify-center text-lg font-bold",
@@ -34,19 +31,18 @@ const changeDate = (date: string) => {
 };
 
 export const PersonalInfo: React.FC = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={` items-center ${defaultCss.sectionContainer}`}>
       <h2 className={`text-xl ${defaultCss.sectionMainHeading}`}>
-        {sectionState["personalInfo"].fname}{" "}
-        {sectionState["personalInfo"].lname}
+        {apiState["personalInfo"].fname} {apiState["personalInfo"].lname}
       </h2>
       <div className={`flex gap-3 ${defaultCss.sectionSubHeading}`}>
-        <p className="">{sectionState["personalInfo"].phone}</p>
+        <p className="">{apiState["personalInfo"].phone}</p>
         <span>|</span>
-        <p className="">{sectionState["personalInfo"].email}</p>
-        {sectionState["personalInfo"].links.map((link: link) => (
+        <p className="">{apiState["personalInfo"].email}</p>
+        {apiState["personalInfo"].links.map((link: LinkType) => (
           <div key={uuidv4()} className="flex gap-3">
             <span>|</span>
             <a
@@ -60,19 +56,19 @@ export const PersonalInfo: React.FC = () => {
         ))}
       </div>
       <div className={defaultCss.border}></div>
-      <p className="">{sectionState["personalInfo"].profileSummary}</p>
+      <p className="">{apiState["personalInfo"].profileSummary}</p>
     </div>
   );
 };
 
 export const Experience: React.FC = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>PROFESSIONAL EXPERIENCE</h4>
       <div className={defaultCss.border}></div>
-      {sectionState["experience"].map((job: ExperienceType) => (
+      {apiState["experience"].map((job: ExperienceType) => (
         <div key={uuidv4()}>
           <div className="flex justify-between">
             <h4 className={defaultCss.sectionSubHeading}>{job.company}</h4>
@@ -99,12 +95,12 @@ export const Experience: React.FC = () => {
 };
 
 export const Projects: React.FC = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>PROJECTS</h4>
       <div className={defaultCss.border}></div>
-      {sectionState["projects"].map((project: ProjectType) => (
+      {apiState["projects"].map((project: ProjectType) => (
         <div key={uuidv4()}>
           <div className="flex justify-between">
             {project.liveLink ? (
@@ -138,7 +134,7 @@ export const Projects: React.FC = () => {
           ></div>
           {project.links && (
             <div className="flex gap-2">
-              {project.links.map((link: link, index: number) => (
+              {project.links.map((link: LinkType, index: number) => (
                 <a
                   key={index}
                   href={link.link}
@@ -158,13 +154,13 @@ export const Projects: React.FC = () => {
 };
 
 export const Education: React.FC = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>EDUCATION</h4>
       <div className={defaultCss.border}></div>
-      {sectionState["education"].map((edu: EducationType) => (
+      {apiState["education"].map((edu: EducationType) => (
         <div key={uuidv4()} className="edu">
           <div className="flex justify-between">
             <h4 className={defaultCss.sectionHeading}>{edu.institution}</h4>
@@ -187,7 +183,7 @@ export const Education: React.FC = () => {
 };
 
 export const TechnicalSkills = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
@@ -196,11 +192,11 @@ export const TechnicalSkills = () => {
       <div
         className="pl-[15px] resume-order-list"
         dangerouslySetInnerHTML={{
-          __html: sanitizedHtml(sectionState["skills"]),
+          __html: sanitizedHtml(apiState["skills"]),
         }}
       ></div>
       {/* <ul className="pl-[15px]">
-            {sectionState['skills'].split("\n").map((responsibility:string) => (
+            {apiState['skills'].split("\n").map((responsibility:string) => (
               <li key={uuidv4()}>{responsibility}</li>
             ))}
           </ul> */}
@@ -209,7 +205,7 @@ export const TechnicalSkills = () => {
 };
 
 export const Achievements = () => {
-  const { sectionState } = useContext(SectionDataContext) as SectionContext;
+  const { state: apiState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
@@ -218,10 +214,10 @@ export const Achievements = () => {
       <div
         className="pl-[15px] resume-order-list"
         dangerouslySetInnerHTML={{
-          __html: sanitizedHtml(sectionState["achievements"]),
+          __html: sanitizedHtml(apiState["achievements"]),
         }}
       ></div>
-      {/* <p>{sectionState['achievements']}</p> */}
+      {/* <p>{apiState['achievements']}</p> */}
     </div>
   );
 };

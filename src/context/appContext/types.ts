@@ -1,11 +1,77 @@
-type link = {
+import { Dispatch, ReactNode, SetStateAction } from "react";
+
+export type AppContextStateType = {
+  state: AppStateType;
+  dispatch: Dispatch<AppActionType>;
+  activeSection: keyof AppStateType;
+  setActiveSection: Dispatch<SetStateAction<keyof AppStateType>>;
+};
+
+export type AppDataProviderProps = {
+  children: ReactNode;
+};
+
+export type AppActionType =
+  | {
+      type: "LINK_INPUT";
+      data: {
+        activeSection: keyof AppStateType;
+        activeItem?: number;
+        name: string;
+        value: string;
+        index: number;
+      };
+    }
+  | {
+      type: "ADD_LINK";
+      data: { activeSection: keyof AppStateType; activeItem?: number };
+    }
+  | {
+      type: "REMOVE_LINK";
+      data: {
+        activeSection: keyof AppStateType;
+        activeItem?: number;
+        index: number;
+      };
+    }
+  | {
+      type: "PERSONAL_INFO";
+      data: { name: string; value: string; index?: number | undefined };
+    }
+  | { type: "EXPERIENCE"; data: { name: string; value: string; index: number } }
+  | { type: "ADD_EXPERIENCE" }
+  | { type: "REMOVE_EXPERIENCE"; data: { index: number } }
+  | { type: "PROJECTS"; data: { name: string; value: string; index: number } }
+  | { type: "ADD_PROJECT" }
+  | { type: "REMOVE_PROJECT"; data: { index: number } }
+  | { type: "EDUCATION"; data: { name: string; value: string; index: number } }
+  | { type: "ADD_EDUCATION" }
+  | { type: "REMOVE_EDUCATION"; data: { index: number } }
+  | { type: "SKILLS"; data: { name: string; value: string } }
+  | { type: "ACHIEVEMENTS"; data: { name: string; value: string } };
+
+export type SectionType =
+  | AppStateType["personalInfo"]
+  | AppStateType["experience"]
+  | AppStateType["projects"]
+  | AppStateType["education"]
+  | AppStateType["skills"]
+  | AppStateType["achievements"];
+
+export type SectionItemType =
+  | ExperienceType
+  | ProjectType
+  | EducationType
+  | AppStateType["personalInfo"];
+
+type LinkType = {
   linkName: string;
   link: string;
 };
 
 type ExperienceType = {
   company: string;
-  links: link[];
+  links: LinkType[];
   start_date: string;
   end_date: string;
   position: string;
@@ -19,24 +85,24 @@ type ProjectType = {
   end_date: string;
   description: string;
   technologies: string;
-  links: link[];
+  links: LinkType[];
 };
 type EducationType = {
   institution: string;
-  links: link[];
+  links: LinkType[];
   start_date: string;
   end_date: string;
   degree: string;
   grade: string;
 };
 
-type SectionDataType = {
+type AppStateType = {
   personalInfo: {
     fname: string;
     lname: string;
     phone: string;
     email: string;
-    links: link[];
+    links: LinkType[];
     linkedIn: string;
     profileSummary: string;
   };
@@ -53,9 +119,9 @@ type SectionDataType = {
 };
 
 export type {
-  link,
+  LinkType,
   ExperienceType,
   ProjectType,
   EducationType,
-  SectionDataType,
+  AppStateType,
 };

@@ -2,16 +2,16 @@ import { useContext, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useMouse from "@react-hook/mouse-position";
 import { motion } from "framer-motion";
-import { UserContext } from "../context/userContext/userContext";
 import { handleSignOut } from "../service/authApi";
-import { ApiContext } from "../context/apiContext/apiContext";
+import { UserContext } from "../context/userContext";
+import { ApiContext } from "../context/apiContext";
+import notification from "../utils/notification";
 import {
   FETCH_ERROR,
   FETCH_REQUEST,
   FETCH_SUCCESS,
   LOGGED_OUT,
 } from "../context/constant";
-import notification from "../utils/notification";
 
 const NavBar = () => {
   const [cursorVariant, setCursorVariant] = useState("default");

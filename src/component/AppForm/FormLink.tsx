@@ -1,20 +1,23 @@
 import { useContext } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../context/appContext/AppContext";
 import { ImCancelCircle } from "react-icons/im";
 import { FormLinkInput } from "./FormComponents";
-import { SectionDataType, link } from "../../context/appContext/types";
+import {
+  AppContext,
+  AppContextStateType,
+  AppStateType,
+  LinkType,
+} from "../../context/appContext";
 
 type FormLinkProps = {
   activeItem: number;
 };
 
 const FormLink = ({ activeItem }: FormLinkProps) => {
-  const { sectionState, activeSection, dispatch } = useContext(
-    SectionDataContext
-  ) as SectionContext;
+  const {
+    state: appState,
+    activeSection,
+    dispatch,
+  } = useContext(AppContext) as AppContextStateType;
 
   const handleLinkInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -74,13 +77,13 @@ const FormLink = ({ activeItem }: FormLinkProps) => {
       </div>
       {(activeItem !== -1
         ? (
-            sectionState[activeSection] as
-              | SectionDataType["experience"]
-              | SectionDataType["education"]
-              | SectionDataType["projects"]
+            appState[activeSection] as
+              | AppStateType["experience"]
+              | AppStateType["education"]
+              | AppStateType["projects"]
           )[activeItem].links
-        : (sectionState[activeSection] as { links: link[] }).links
-      ).map((link: link, index: number) => (
+        : (appState[activeSection] as { links: LinkType[] }).links
+      ).map((link: LinkType, index: number) => (
         <div key={index} className="flex items-center gap-5 text-2xl">
           <FormLinkInput
             linkName={link.linkName}

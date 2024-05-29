@@ -1,70 +1,19 @@
-import { Reducer, useReducer } from "react";
+import { Reducer } from "react";
 import {
   EducationType,
   ExperienceType,
   ProjectType,
-  SectionDataType,
-  link,
+  AppActionType,
+  AppStateType,
+  LinkType,
+  SectionType,
+  SectionItemType,
 } from "./types";
-import { defaultState } from "./InitialState";
 
-export type SectionDataAction =
-  | {
-      type: "LINK_INPUT";
-      data: {
-        activeSection: keyof SectionDataType;
-        activeItem?: number;
-        name: string;
-        value: string;
-        index: number;
-      };
-    }
-  | {
-      type: "ADD_LINK";
-      data: { activeSection: keyof SectionDataType; activeItem?: number };
-    }
-  | {
-      type: "REMOVE_LINK";
-      data: {
-        activeSection: keyof SectionDataType;
-        activeItem?: number;
-        index: number;
-      };
-    }
-  | {
-      type: "PERSONAL_INFO";
-      data: { name: string; value: string; index?: number | undefined };
-    }
-  | { type: "EXPERIENCE"; data: { name: string; value: string; index: number } }
-  | { type: "ADD_EXPERIENCE" }
-  | { type: "REMOVE_EXPERIENCE"; data: { index: number } }
-  | { type: "PROJECTS"; data: { name: string; value: string; index: number } }
-  | { type: "ADD_PROJECT" }
-  | { type: "REMOVE_PROJECT"; data: { index: number } }
-  | { type: "EDUCATION"; data: { name: string; value: string; index: number } }
-  | { type: "ADD_EDUCATION" }
-  | { type: "REMOVE_EDUCATION"; data: { index: number } }
-  | { type: "SKILLS"; data: { name: string; value: string } }
-  | { type: "ACHIEVEMENTS"; data: { name: string; value: string } };
-
-export type SectionType =
-  | SectionDataType["personalInfo"]
-  | SectionDataType["experience"]
-  | SectionDataType["projects"]
-  | SectionDataType["education"]
-  | SectionDataType["skills"]
-  | SectionDataType["achievements"];
-
-export type SectionItemType =
-  | ExperienceType
-  | ProjectType
-  | EducationType
-  | SectionDataType["personalInfo"];
-
-export const SectionDataReducers: Reducer<
-  SectionDataType,
-  SectionDataAction
-> = (state, action) => {
+export const appReducer: Reducer<AppStateType, AppActionType> = (
+  state,
+  action
+) => {
   const link = {
     linkName: "",
     link: "",
@@ -109,7 +58,7 @@ export const SectionDataReducers: Reducer<
             index === action.data.activeItem
               ? {
                   ...item,
-                  links: item.links.map((link: link, key: number) =>
+                  links: item.links.map((link: LinkType, key: number) =>
                     key === action.data.index
                       ? { ...link, [action.data.name]: action.data.value }
                       : link
@@ -118,9 +67,9 @@ export const SectionDataReducers: Reducer<
               : item
           ) as SectionType)
         : ({
-            ...(section as { links: link[] }),
-            links: (section as { links: link[] }).links.map(
-              (link: link, index: number) =>
+            ...(section as { links: LinkType[] }),
+            links: (section as { links: LinkType[] }).links.map(
+              (link: LinkType, index: number) =>
                 index === action.data.index
                   ? { ...link, [action.data.name]: action.data.value }
                   : link
@@ -144,8 +93,8 @@ export const SectionDataReducers: Reducer<
               : item
           ) as SectionType)
         : ({
-            ...(section as { links: link[] }),
-            links: [...(section as { links: link[] }).links, link],
+            ...(section as { links: LinkType[] }),
+            links: [...(section as { links: LinkType[] }).links, link],
           } as SectionType);
 
       return {
@@ -161,16 +110,16 @@ export const SectionDataReducers: Reducer<
               ? {
                   ...item,
                   links: item.links.filter(
-                    (_link: link, linkIndex: number) =>
+                    (_link: LinkType, linkIndex: number) =>
                       linkIndex !== action.data.index
                   ),
                 }
               : item
           ) as SectionType)
         : ({
-            ...(section as { links: link[] }),
-            links: (section as { links: link[] }).links.filter(
-              (_link: link, linkIndex: number) =>
+            ...(section as { links: LinkType[] }),
+            links: (section as { links: LinkType[] }).links.filter(
+              (_link: LinkType, linkIndex: number) =>
                 linkIndex !== action.data.index
             ),
           } as SectionType);
@@ -282,15 +231,4 @@ export const SectionDataReducers: Reducer<
     default:
       return state;
   }
-};
-
-export const useSectionReducers = () => {
-  const [sectionState, dispatch] = useReducer(
-    SectionDataReducers,
-    defaultState
-  );
-  return { sectionState, dispatch } as {
-    sectionState: SectionDataType;
-    dispatch: React.Dispatch<SectionDataAction>;
-  };
 };

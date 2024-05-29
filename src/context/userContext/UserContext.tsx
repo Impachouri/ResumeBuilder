@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, createContext, useReducer, FC } from "react";
-import initialState from "./InitialState";
+import initialState from "./initialState";
 import userReducer from "./userReducer";
 import { UserActionType, UserStateType } from "./types";
 

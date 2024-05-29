@@ -1,13 +1,12 @@
-// import { ApiResponsetype } from "../../service/types";
-import { SectionDataType } from "../appContext/types";
+import { AppStateType } from "../appContext/types";
 import { FETCH_REQUEST, FETCH_ERROR, FETCH_SUCCESS } from "../constant";
 import { UserType } from "../userContext/types";
 import { ApiActionType, ApiStateType } from "./types";
 
 const apiReducer = (
-  state: ApiStateType<SectionDataType | UserType>,
-  action: ApiActionType<SectionDataType | UserType>
-): ApiStateType<SectionDataType | UserType> => {
+  state: ApiStateType<AppStateType | UserType>,
+  action: ApiActionType<AppStateType | UserType>
+): ApiStateType<AppStateType | UserType> => {
   switch (action.type) {
     case FETCH_REQUEST:
       return { ...state, loading: true, error: null };

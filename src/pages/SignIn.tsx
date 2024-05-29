@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { ApiContext } from "../context/apiContext/apiContext";
-import { UserContext } from "../context/userContext/userContext";
+import { UserContext } from "../context/userContext";
+import { ApiContext } from "../context/apiContext";
 import { handleSignIn } from "../service/authApi";
 import { SignInFormDataType } from "../service/types";
 import { FormField } from "../component/AuthForm/FormField";

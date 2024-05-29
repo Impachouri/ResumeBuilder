@@ -1,17 +1,16 @@
 import { useContext } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import { FormInput, FormTextArea } from "../../AppForm/FormComponents";
 import FormLink from "../../AppForm/FormLink";
 import { ErrorBoundary } from "react-error-boundary";
 
 const PersonalInfoForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const personalInfo = sectionState["personalInfo"];
+  const {
+    state: appState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const personalInfo = appState["personalInfo"];
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

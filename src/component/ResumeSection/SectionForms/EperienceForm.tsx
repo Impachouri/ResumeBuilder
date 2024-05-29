@@ -1,9 +1,6 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext, useEffect, useState } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import {
   FormButton,
   FormChecked,
@@ -14,10 +11,12 @@ import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
 
 const ExperienceForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const experiences = sectionState["experience"];
+  const {
+    state: appState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const experiences = appState["experience"];
   const [activeExperience, setActiveExperience] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
 

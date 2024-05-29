@@ -2,18 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { SectionDataProvider } from "./context/appContext/AppContext.tsx";
-import { ApiDataProvider } from "./context/apiContext/apiContext.tsx";
-import { UserDataProvider } from "./context/userContext/userContext.tsx";
+import { AppDataProvider } from "./context/appContext/AppContext";
+import { ApiDataProvider } from "./context/apiContext/ApiContext";
+import { UserDataProvider } from "./context/userContext/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <SectionDataProvider>
+    <AppDataProvider>
       <ApiDataProvider>
         <UserDataProvider>
           <App />
         </UserDataProvider>
       </ApiDataProvider>
-    </SectionDataProvider>
+    </AppDataProvider>
   </React.StrictMode>
 );

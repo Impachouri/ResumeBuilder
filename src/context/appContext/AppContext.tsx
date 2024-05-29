@@ -1,39 +1,26 @@
+import { createContext, FC, useReducer, useState } from "react";
+import { appReducer } from "./appReducer";
+import { initialState } from "./initialState";
 import {
-  createContext,
-  Dispatch,
-  FC,
-  ReactNode,
-  SetStateAction,
-  useState,
-} from "react";
-import { SectionDataAction, useSectionReducers } from "./AppReducer";
-import { SectionDataType } from "./types";
+  AppStateType,
+  AppDataProviderProps,
+  AppContextStateType,
+} from "./types";
 
-export type SectionContext = {
-  sectionState: SectionDataType;
-  dispatch: Dispatch<SectionDataAction>;
-  activeSection: keyof SectionDataType;
-  setActiveSection: Dispatch<SetStateAction<keyof SectionDataType>>;
-};
+const AppContext = createContext<AppContextStateType | null>(null);
 
-type SectionDataProviderProps = {
-  children: ReactNode;
-};
-
-export const SectionDataContext = createContext<SectionContext | null>(null);
-
-export const SectionDataProvider: FC<SectionDataProviderProps> = ({
-  children,
-}) => {
-  const { sectionState, dispatch } = useSectionReducers();
+const AppDataProvider: FC<AppDataProviderProps> = ({ children }) => {
+  const [state, dispatch] = useReducer(appReducer, initialState);
   const [activeSection, setActiveSection] =
-    useState<keyof SectionDataType>("personalInfo");
+    useState<keyof AppStateType>("personalInfo");
 
   return (
-    <SectionDataContext.Provider
-      value={{ sectionState, dispatch, activeSection, setActiveSection }}
+    <AppContext.Provider
+      value={{ state, dispatch, activeSection, setActiveSection }}
     >
       {children}
-    </SectionDataContext.Provider>
+    </AppContext.Provider>
   );
 };
+
+export { AppContext, AppDataProvider };

@@ -1,17 +1,14 @@
+import { useContext } from "react";
 import PersonalInfoForm from "./SectionForms/PersonalInfoForm";
 import ExperienceForm from "./SectionForms/EperienceForm";
 import ProjectForm from "./SectionForms/ProjectForm";
 import SkillForm from "./SectionForms/SkillForm";
 import AchievementForm from "./SectionForms/AchievementForm";
 import EducationForm from "./SectionForms/EductionForm";
-import { useContext } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../context/appContext";
 
 const RenderSectionForm = () => {
-  const { activeSection } = useContext(SectionDataContext) as SectionContext;
+  const { activeSection } = useContext(AppContext) as AppContextStateType;
 
   const renderFormComponent = (sectionId: string) => {
     switch (sectionId) {

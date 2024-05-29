@@ -1,9 +1,6 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext, useEffect, useState } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import {
   FormInput,
   FormButton,
@@ -13,10 +10,12 @@ import { MdCancel } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 
 const EducationForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const educations = sectionState["education"];
+  const {
+    state: apiState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const educations = apiState["education"];
   const [activeEducation, setActiveEducation] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
 
@@ -66,7 +65,7 @@ const EducationForm = () => {
         <div className="flex flex-wrap gap-6 mb-6">
           <h2 className="uppercase text-3xl font-bold">{activeSection}</h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            {educations.map((_, index) => (
+            {educations.map((_, index: number) => (
               <div
                 key={uuidv4()}
                 className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2 ${

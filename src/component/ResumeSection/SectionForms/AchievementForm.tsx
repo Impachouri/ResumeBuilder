@@ -1,16 +1,15 @@
 import { useContext } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import { ErrorBoundary } from "react-error-boundary";
 import TextEditor from "../../TextEditor/TextEditor";
 
 const AchievementForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const achievements = sectionState["achievements"];
+  const {
+    state: appState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const achievements = appState["achievements"];
 
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
   //   const { name, value } = e.currentTarget;

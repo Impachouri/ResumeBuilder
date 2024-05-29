@@ -1,10 +1,7 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext, useState } from "react";
 import { MdCancel } from "react-icons/md";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import {
   FormInput,
   FormButton,
@@ -15,10 +12,12 @@ import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
 
 const ProjectForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const projects = sectionState["projects"];
+  const {
+    state: appState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const projects = appState["projects"];
   const [activeProject, setActiveProject] = useState<number>(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
 
@@ -133,7 +132,7 @@ const ProjectForm = () => {
               handleEndDateDisable={handleEndDateDisable}
             />
             {projects.map(
-              (project, index) =>
+              (project, index: number) =>
                 activeProject === index && (
                   <TextEditor
                     key={index}

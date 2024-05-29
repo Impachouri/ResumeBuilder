@@ -11,21 +11,21 @@ import {
 } from "./component/ResumeTemplate/ResumeSections";
 import RenderSectionForm from "./component/ResumeSection/RenderSectionForm";
 import {
-  SectionContext,
-  SectionDataContext,
-} from "./context/appContext/AppContext";
+  AppContext,
+  AppContextStateType,
+  AppStateType,
+} from "./context/appContext";
+import { ApiContext } from "./context/apiContext";
 import PdfGenerator from "./component/PdfGenerator/PdfGenerator";
 import { IconType } from "react-icons";
 import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
 import "./App.css";
-import { SectionDataType } from "./context/appContext/types";
-import { ApiContext } from "./context/apiContext/apiContext";
 // import { fetchResume } from "./service/appApi";
 
 export interface ResumeSectionData {
-  id: keyof SectionDataType;
+  id: keyof AppStateType;
   title: string;
   component: React.ReactNode;
   order: number;
@@ -38,8 +38,8 @@ const Resume: React.FC = () => {
   const [fontFamily, setFontFamily] = useState<string>("font-sans");
   const [fontSize, setFontSize] = useState<number>(10);
   const { activeSection, setActiveSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
+    AppContext
+  ) as AppContextStateType;
 
   const { state } = useContext(ApiContext);
 
@@ -91,8 +91,8 @@ const Resume: React.FC = () => {
   const fontFamilyOption: string[] = ["font-sans", "font-serif", "font-mono"];
   const fontOption = ["10", "12", "14", "16"];
 
-  const handleActiveSession = (sectionId: keyof SectionDataType) => {
-    setActiveSection((prevActiveSection: keyof SectionDataType) => {
+  const handleActiveSession = (sectionId: keyof AppStateType) => {
+    setActiveSection((prevActiveSection: keyof AppStateType) => {
       return prevActiveSection === sectionId ? prevActiveSection : sectionId;
     });
   };

@@ -2,17 +2,16 @@
 // import { FormTextArea } from "../../Forms/FormComponents";
 import { ErrorBoundary } from "react-error-boundary";
 import { useContext } from "react";
-import {
-  SectionContext,
-  SectionDataContext,
-} from "../../../context/appContext/AppContext";
+import { AppContext, AppContextStateType } from "../../../context/appContext";
 import TextEditor from "../../TextEditor/TextEditor";
 
 const SkillForm = () => {
-  const { sectionState, dispatch, activeSection } = useContext(
-    SectionDataContext
-  ) as SectionContext;
-  const skills = sectionState["skills"];
+  const {
+    state: apiState,
+    dispatch,
+    activeSection,
+  } = useContext(AppContext) as AppContextStateType;
+  const skills = apiState["skills"];
 
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
   //   const { name, value } = e.currentTarget;
