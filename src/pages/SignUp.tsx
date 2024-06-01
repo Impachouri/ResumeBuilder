@@ -14,7 +14,7 @@ import { FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS } from "../context/constant";
 import useRedirectToPath from "../utils/redirectToPath";
 
 const SignUp = () => {
-  const { state: apiState, dispatch: apiDispatch } = useContext(ApiContext);
+  const { dispatch: apiDispatch } = useContext(ApiContext);
   const notify = notification();
   const redirect = useRedirectToPath();
 

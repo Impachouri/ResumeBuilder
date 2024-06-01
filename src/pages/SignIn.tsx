@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { ApiContext } from "../context/apiContext";
 import { handleSignIn } from "../service/authApi";
@@ -20,7 +20,7 @@ import {
 } from "../context/constant";
 
 const SignIn = () => {
-  const { state: apiState, dispatch: apiDispatch } = useContext(ApiContext);
+  const { dispatch: apiDispatch } = useContext(ApiContext);
   const { dispatch: userDispatch } = useContext(UserContext);
   const notify = notification();
   const redirect = useRedirectToPath();
