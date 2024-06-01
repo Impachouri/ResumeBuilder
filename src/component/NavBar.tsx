@@ -12,12 +12,14 @@ import {
   FETCH_SUCCESS,
   LOGGED_OUT,
 } from "../context/constant";
+import useRedirectToPath from "../utils/redirectToPath";
 
 const NavBar = () => {
   const [cursorVariant, setCursorVariant] = useState("default");
   const { dispatch: apiDispatch } = useContext(ApiContext);
   const { state: userState, dispatch: userDispatch } = useContext(UserContext);
   const notify = notification();
+  const redirect = useRedirectToPath();
 
   const location = useLocation();
   const ref = useRef(null);
@@ -86,6 +88,9 @@ const NavBar = () => {
           error instanceof Error ? error.message : String(error);
         apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
         notify("Error while logging out.", "ERROR");
+      })
+      .finally(() => {
+        redirect("/");
       });
   };
 

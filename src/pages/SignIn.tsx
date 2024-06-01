@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 import { ApiContext } from "../context/apiContext";
 import { handleSignIn } from "../service/authApi";
@@ -45,9 +45,6 @@ const SignIn = () => {
       actions.setSubmitting(false);
     }
   };
-
-  if (apiState.loading) return <div>Loading...</div>;
-  if (apiState.error) return <div>Error: {apiState.error}</div>;
 
   return (
     <div className="min-h-screen text-gray-900 flex justify-center">

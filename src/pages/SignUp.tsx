@@ -40,9 +40,6 @@ const SignUp = () => {
     }
   };
 
-  if (apiState.loading) return <div>Loading...</div>;
-  if (apiState.error) return <div>Error: {apiState.error}</div>;
-
   return (
     <div className="min-h-screen text-gray-900 flex justify-center">
       <div className="max-w-screen-x shadow sm:rounded-lg flex justify-center flex-1">
