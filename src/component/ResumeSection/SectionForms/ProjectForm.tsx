@@ -10,6 +10,14 @@ import {
 import FormLink from "../../AppForm/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
+import { ApiContext } from "../../../context/apiContext";
+import {
+  FETCH_ERROR,
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
+} from "../../../context/constant";
+import notification from "../../../utils/notification";
+import { saveProject } from "../../../service/appApi";
 
 const ProjectForm = () => {
   const {
@@ -17,9 +25,12 @@ const ProjectForm = () => {
     dispatch,
     activeSection,
   } = useContext(AppContext) as AppContextStateType;
+  const { dispatch: apiDispatch } = useContext(ApiContext);
+
   const projects = appState["projects"];
   const [activeProject, setActiveProject] = useState<number>(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
+  const notify = notification();
 
   const handleEndDateDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -58,6 +69,26 @@ const ProjectForm = () => {
   ) => {
     e.preventDefault();
     dispatch({ type: "REMOVE_PROJECT", data: { index: index } });
+  };
+
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    apiDispatch({ type: FETCH_REQUEST });
+    try {
+      const data = appState.projects[activeProject];
+      const response = await saveProject(data);
+      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
+      console.log("Success", response);
+      notify(response.message, "SUCCESS");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log("Error");
+      notify(errorMessage, "ERROR");
+    }
   };
 
   return (
@@ -150,7 +181,14 @@ const ProjectForm = () => {
               defaultValue={projects[activeProject]["technologies"]}
               handleInputChange={handleInputChange}
             />
-            <FormButton label="Add" id="addProject" handleClick={handleAdd} />
+            <div className="flex flex-row justify-end">
+              <FormButton label="Add" id="addProject" handleClick={handleAdd} />
+              <FormButton
+                label="Save"
+                id="saveProject"
+                handleClick={handleSave}
+              />
+            </div>
           </form>
         )}
       </div>

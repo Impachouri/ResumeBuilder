@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import ResumeTemplate from "./component/ResumeTemplate/ResumeTemplate";
-import ResumeSectionHeader from "./component/ResumeSection/ResumeSectionHeader";
+import ResumeTemplate from "../component/ResumeTemplate/ResumeTemplate";
+import ResumeSectionHeader from "../component/ResumeSection/ResumeSectionHeader";
 import {
   PersonalInfo,
   Achievements,
@@ -8,20 +8,20 @@ import {
   Experience,
   Projects,
   TechnicalSkills,
-} from "./component/ResumeTemplate/ResumeSections";
-import RenderSectionForm from "./component/ResumeSection/RenderSectionForm";
+} from "../component/ResumeTemplate/ResumeSections";
+import RenderSectionForm from "../component/ResumeSection/RenderSectionForm";
 import {
   AppContext,
   AppContextStateType,
   AppStateType,
-} from "./context/appContext";
-import { ApiContext } from "./context/apiContext";
-import PdfGenerator from "./component/PdfGenerator/PdfGenerator";
+} from "../context/appContext";
+import { ApiContext } from "../context/apiContext";
+import PdfGenerator from "../component/PdfGenerator/PdfGenerator";
 import { IconType } from "react-icons";
 import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
-import "./App.css";
+import "../App.css";
 // import { fetchResume } from "./service/appApi";
 
 export interface ResumeSectionData {
@@ -36,12 +36,12 @@ const Resume: React.FC = () => {
   const resumeRef = useRef(null);
   const [dragId, setDragId] = useState<string | undefined>();
   const [fontFamily, setFontFamily] = useState<string>("font-sans");
-  const [fontSize, setFontSize] = useState<number>(10);
-  const { activeSection, setActiveSection } = useContext(
-    AppContext
-  ) as AppContextStateType;
-
-  const { state } = useContext(ApiContext);
+  const [fontSize, setFontSize] = useState<string>("base");
+  const {
+    activeSection,
+    setActiveSection,
+    state: appState,
+  } = useContext(AppContext) as AppContextStateType;
 
   const [sections, setSections] = useState<ResumeSectionData[]>([
     {
@@ -89,7 +89,7 @@ const Resume: React.FC = () => {
   ]);
 
   const fontFamilyOption: string[] = ["font-sans", "font-serif", "font-mono"];
-  const fontOption = ["10", "12", "14", "16"];
+  const fontOption = ["base", "lg", "xl", "2xl"];
 
   const handleActiveSession = (sectionId: keyof AppStateType) => {
     setActiveSection((prevActiveSection: keyof AppStateType) => {
@@ -127,11 +127,11 @@ const Resume: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    console.log(appState);
+  }, [appState]);
 
   return (
-    <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">
+    <div className="w-screen h-screen text-black flex flex-col mt-36  lg:flex-row">
       <div className="flex flex-col w-full lg:w-[50%]  border-solid border-r-2 p-5 gap-5 h-screen  overflow-y-scroll">
         <div className="grid gap-4 grid-cols-2  lg:grid-cols-4">
           {sections
@@ -175,7 +175,7 @@ const Resume: React.FC = () => {
               name="font-option"
               id="font-option"
               className="rounded-md focus:outline-none focus:ring p-1"
-              onChange={(e) => setFontSize(parseInt(e.target.value))}
+              onChange={(e) => setFontSize(e.target.value)}
             >
               {fontOption.map((font) => (
                 <option key={font} value={font}>
@@ -206,7 +206,7 @@ const Resume: React.FC = () => {
         <div
           ref={resumeRef}
           style={{ perspective: 2000 }}
-          className={`flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${fontSize}px] `}
+          className={`flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-${fontSize} `}
         >
           <ResumeTemplate sections={sections} />
         </div>

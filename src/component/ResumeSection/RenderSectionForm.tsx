@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import PersonalInfoForm from "./SectionForms/PersonalInfoForm";
-import ExperienceForm from "./SectionForms/EperienceForm";
+import ExperienceForm from "./SectionForms/ExperienceForm";
 import ProjectForm from "./SectionForms/ProjectForm";
 import SkillForm from "./SectionForms/SkillForm";
 import AchievementForm from "./SectionForms/AchievementForm";
-import EducationForm from "./SectionForms/EductionForm";
+import EducationForm from "./SectionForms/EducationForm";
 import { AppContext, AppContextStateType } from "../../context/appContext";
 
 const RenderSectionForm = () => {

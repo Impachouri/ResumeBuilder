@@ -8,14 +8,24 @@ import {
 } from "../../AppForm/FormComponents";
 import { MdCancel } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
+import { ApiContext } from "../../../context/apiContext";
+import {
+  FETCH_ERROR,
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
+} from "../../../context/constant";
+import { saveEducation } from "../../../service/appApi";
+import notification from "../../../utils/notification";
 
 const EducationForm = () => {
   const {
-    state: apiState,
+    state: appState,
     dispatch,
     activeSection,
   } = useContext(AppContext) as AppContextStateType;
-  const educations = apiState["education"];
+  const { dispatch: apiDispatch } = useContext(ApiContext);
+  const notify = notification();
+  const educations = appState["education"];
   const [activeEducation, setActiveEducation] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
 
@@ -55,7 +65,27 @@ const EducationForm = () => {
     dispatch({ type: "REMOVE_EDUCATION", data: { index: index } });
   };
 
-  useEffect(() => setActiveEducation(educations.length - 1), [educations]);
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    apiDispatch({ type: FETCH_REQUEST });
+    try {
+      const data = appState.education[activeEducation];
+      const response = await saveEducation(data);
+      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
+      console.log("Success", response);
+      notify(response.message, "SUCCESS");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log("Error");
+      notify(errorMessage, "ERROR");
+    }
+  };
+
+  // useEffect(() => setActiveEducation(educations.length - 1), [educations]);
 
   return (
     <ErrorBoundary
@@ -135,7 +165,18 @@ const EducationForm = () => {
               id="currently_study"
               handleEndDateDisable={handleEndDateDisable}
             />
-            <FormButton label="Add" id="addEducation" handleClick={handleAdd} />
+            <div className="flex flex-row justify-end">
+              <FormButton
+                label="Add"
+                id="addEducation"
+                handleClick={handleAdd}
+              />
+              <FormButton
+                label="Save"
+                id="saveEducation"
+                handleClick={handleSave}
+              />
+            </div>
           </form>
         )}
       </div>

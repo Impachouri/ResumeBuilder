@@ -114,9 +114,9 @@ const NavBar = () => {
               Home
             </li>
           </Link>
-          <Link to="create">
+          <Link to="profile">
             <li className="py-2 px-3 rounded-xl hover:bg-[#7C3AED] hover:text-white text-black text-lg font-bold cursor-pointer">
-              Create
+              Profile
             </li>
           </Link>
         </ul>

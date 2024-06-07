@@ -5,6 +5,8 @@ export type AppContextStateType = {
   dispatch: Dispatch<AppActionType>;
   activeSection: keyof AppStateType;
   setActiveSection: Dispatch<SetStateAction<keyof AppStateType>>;
+  resumeProfile: string;
+  setResumeProfile: Dispatch<SetStateAction<string>>;
 };
 
 export type AppDataProviderProps = {
@@ -70,6 +72,7 @@ type LinkType = {
 };
 
 type ExperienceType = {
+  _id?: string;
   company: string;
   links: LinkType[];
   start_date: string;
@@ -79,6 +82,7 @@ type ExperienceType = {
 };
 
 type ProjectType = {
+  _id?: string;
   name: string;
   liveLink: string;
   start_date: string;
@@ -88,6 +92,7 @@ type ProjectType = {
   links: LinkType[];
 };
 type EducationType = {
+  _id?: string;
   institution: string;
   links: LinkType[];
   start_date: string;
@@ -96,16 +101,22 @@ type EducationType = {
   grade: string;
 };
 
-type AppStateType = {
-  personalInfo: {
-    fname: string;
-    lname: string;
-    phone: string;
-    email: string;
-    links: LinkType[];
-    linkedIn: string;
-    profileSummary: string;
+type PersonalInfoType = {
+  _id?: string;
+  fname: string;
+  lname: string;
+  phone: string;
+  email: string;
+  links: LinkType[];
+  profileSummary: string;
+  location: {
+    city: string;
+    state: string;
   };
+};
+
+type AppStateType = {
+  personalInfo: PersonalInfoType;
 
   experience: Array<ExperienceType>;
 
@@ -124,4 +135,5 @@ export type {
   ProjectType,
   EducationType,
   AppStateType,
+  PersonalInfoType,
 };

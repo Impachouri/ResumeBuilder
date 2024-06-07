@@ -1,22 +1,59 @@
-// import { Dispatch } from "react";
-// import { FETCH_REQUEST, FETCH_SUCCESS } from "../context/constant";
-// import asyncHandler from "../utils/asyncHanlder";
-// import { ApiActionType } from "../context/apiContext/types";
-// import { UserType } from "../context/userContext/types";
-// import { AppStateType } from "../context/AppContextType/types";
-// import { axiosInstance } from "./axios.config";
-// import { ApiResponseType } from "./types";
+import { Dispatch } from "react";
+import { ApiActionType } from "../context/apiContext/types";
+import { AppStateType } from "../context/appContext/types";
+import { FETCH_ERROR, FETCH_SUCCESS } from "../context/constant";
+import { axiosInstance } from "./axiosConfig";
 
-// const fetchResume = asyncHandler(
-//   async (dispatch: Dispatch<ApiActionType<AppStateType | UserType>>) => {
-//     dispatch({ type: FETCH_REQUEST });
-//     const response: ApiResponseType<AppStateType> = await axiosInstance.get(
-//       "/resume/fetch-resume"
-//     );
-//     const data = response.data;
-//     console.log(data);
-//     dispatch({ type: FETCH_SUCCESS, payload: data });
-//   }
-// );
+const ResumeAPI = {
+  create: async function (
+    endpoint: string,
+    data: AppStateType,
+    dispatch: Dispatch<ApiActionType<AppStateType>>
+  ) {
+    try {
+      const response = await axiosInstance.post(endpoint, data);
+      dispatch({ type: FETCH_SUCCESS, payload: response.data });
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      dispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log(error);
+    }
+  },
 
-// export { fetchResume };
+  update: async function (
+    endpoint: string,
+    data: AppStateType,
+    dispatch: Dispatch<ApiActionType<AppStateType>>
+  ) {
+    try {
+      const response = await axiosInstance.put(endpoint, data);
+      dispatch({ type: FETCH_SUCCESS, payload: response.data });
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      dispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log(error);
+    }
+  },
+
+  delete: async function (
+    endpoint: string,
+    dispatch: Dispatch<ApiActionType<AppStateType>>
+  ) {
+    try {
+      const response = await axiosInstance.delete(endpoint);
+      dispatch({ type: FETCH_SUCCESS, payload: response.data });
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      dispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log(error);
+    }
+  },
+};
+
+export default ResumeAPI;

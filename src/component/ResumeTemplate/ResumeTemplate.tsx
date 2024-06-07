@@ -1,18 +1,15 @@
-import React from 'react';
-import { ResumeSectionData } from '../../Resume';
-import { useMotionValue } from 'framer-motion';
-import { v4 as uuidv4 } from 'uuid';
-   
+import React from "react";
+import { ResumeSectionData } from "../Resume";
+import { useMotionValue } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 interface ResumeTemplateProps {
-  sections:ResumeSectionData[];
+  sections: ResumeSectionData[];
 }
 
-const ResumeTemplate: React.FC<ResumeTemplateProps> = ({sections}) => {
-
+const ResumeTemplate: React.FC<ResumeTemplateProps> = ({ sections }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -35,19 +32,16 @@ const ResumeTemplate: React.FC<ResumeTemplateProps> = ({sections}) => {
     y.set(0);
   };
 
-  
   return (
-    <div 
+    <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
         transformStyle: "preserve-3d",
       }}
-      >
+    >
       {sections.map((section: ResumeSectionData) => (
-        <div key={uuidv4()}>
-          {section.component}
-        </div>
+        <div key={uuidv4()}>{section.component}</div>
       ))}
     </div>
   );

@@ -18,7 +18,6 @@ const Layout = () => {
       <main>
         {apiState.loading && <Loading />}
         <ToastContainer />
-
         <Outlet />
       </main>
     </div>

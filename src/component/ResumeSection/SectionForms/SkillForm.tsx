@@ -4,15 +4,26 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useContext } from "react";
 import { AppContext, AppContextStateType } from "../../../context/appContext";
 import TextEditor from "../../TextEditor/TextEditor";
+import { ApiContext } from "../../../context/apiContext";
+import notification from "../../../utils/notification";
+import {
+  FETCH_ERROR,
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
+} from "../../../context/constant";
+import { saveSkill } from "../../../service/appApi";
+import { FormButton } from "../../AppForm/FormComponents";
 
 const SkillForm = () => {
   const {
-    state: apiState,
+    state: appState,
     dispatch,
     activeSection,
   } = useContext(AppContext) as AppContextStateType;
-  const skills = apiState["skills"];
+  const { dispatch: apiDispatch } = useContext(ApiContext);
 
+  const skills = appState["skills"];
+  const notify = notification();
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
   //   const { name, value } = e.currentTarget;
   //   console.log(name, value)
@@ -24,6 +35,26 @@ const SkillForm = () => {
       type: "SKILLS",
       data: { name: "responsibilities", value: content },
     });
+  };
+
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    apiDispatch({ type: FETCH_REQUEST });
+    try {
+      const data = appState.skills;
+      const response = await saveSkill(data);
+      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
+      console.log("Success", response);
+      notify(response.message, "SUCCESS");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
+      console.log("Error");
+      notify(errorMessage, "ERROR");
+    }
   };
 
   return (
@@ -41,6 +72,7 @@ const SkillForm = () => {
             value={skills}
             handleTextArea={handleTextArea}
           />
+          <FormButton label="Save" id="saveSkill" handleClick={handleSave} />
           {/* <FormTextArea type="text" label="Responsibility" id="responsibilities" defaultValue={skills} handleInputChange={ handleInputChange } /> */}
         </form>
       </div>

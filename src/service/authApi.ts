@@ -1,5 +1,5 @@
 import { UserType } from "../context/userContext/types";
-import { axiosInstance } from "./axios.config";
+import { axiosInstance } from "./axiosConfig";
 import {
   ApiResponseType,
   SignInFormDataType,

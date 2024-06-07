@@ -6,16 +6,18 @@ export const initialState: AppStateType = {
     lname: "PACHOURI",
     phone: "+91 9956224901",
     email: "ampachouri09@gmail.com",
+    profileSummary:
+      "Passionate Software Engineer with expertise in full-stack development. Led end-to-end projects at GX INDIA, demonstrating a strong track record in project management and seamless technology integration.",
     links: [
       {
         linkName: "/in/ampachouri09/",
         link: "https://www.linkedin.com/in/ampachouri09/",
       },
     ],
-    linkedIn:
-      '<a href="https://www.linkedin.com/in/ampachouri09/" target="_blank">/in/ampachouri09/</a>',
-    profileSummary:
-      "Passionate Software Engineer with expertise in full-stack development. Led end-to-end projects at GX INDIA, demonstrating a strong track record in project management and seamless technology integration.",
+    location: {
+      city: "Jhansi",
+      state: "UP",
+    },
   },
   experience: [
     {

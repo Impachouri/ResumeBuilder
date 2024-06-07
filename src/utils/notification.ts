@@ -17,6 +17,7 @@ const notification = () => {
   const notify = (message: string, type: "SUCCESS" | "INFO" | "ERROR") => {
     switch (type) {
       case "SUCCESS":
+        console.log("Success 1");
         toast.success(message, options);
         break;
       case "INFO":

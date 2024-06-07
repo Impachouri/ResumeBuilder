@@ -9,6 +9,8 @@ const questions = [
     name: "profile",
     value: "",
   },
+  { question: "Enter your first name?", name: "fname", value: "" },
+  { question: "Enter your last name?", name: "lname", value: "" },
   { question: "Enter your Email?", name: "email", value: "" },
   { question: "Enter your Mobile Number", name: "phone", value: "" },
 ];
@@ -55,27 +57,29 @@ const CreateResume = () => {
   };
 
   return (
-    <div className="w-screen h-screen text-black text-5xl flex flex-col items-center justify-around p-96 gap-28">
-      <span className="self-start">
-        {questionAnswer[currentQuestionIndex].question}
-      </span>
-      <div className="relative z-0 w-full group">
-        <input
-          onKeyDown={handleKeyDown}
-          onChange={handleInputChange}
-          type="email"
-          name={questionAnswer[currentQuestionIndex].name}
-          className="block py-5 px-0 w-full text-4xl font-bold text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  peer"
-          placeholder=""
-          value={questionAnswer[currentQuestionIndex].value}
-          required
-        />
-        <label
-          htmlFor={questionAnswer[currentQuestionIndex].name}
-          className="peer-focus:font-semibold absolute text-4xl text-gray-500 duration-300 transform -translate-y-14 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-14"
-        >
-          {`Type your ${questionAnswer[currentQuestionIndex].name} here`}
-        </label>
+    <div className="w-screen h-screen text-black text-5xl flex flex-col justify-around px-40 pt-28">
+      <div className="flex flex-col gap-28">
+        <span className="self-start">
+          {questionAnswer[currentQuestionIndex].question}
+        </span>
+        <div className="relative z-0 w-full group">
+          <input
+            onKeyDown={handleKeyDown}
+            onChange={handleInputChange}
+            type="email"
+            name={questionAnswer[currentQuestionIndex].name}
+            className="block py-5 px-0 w-full text-4xl font-bold text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0  peer"
+            placeholder=""
+            value={questionAnswer[currentQuestionIndex].value}
+            required
+          />
+          <label
+            htmlFor={questionAnswer[currentQuestionIndex].name}
+            className="peer-focus:font-semibold absolute text-4xl text-gray-500 duration-300 transform -translate-y-14 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-14"
+          >
+            {`Type your ${questionAnswer[currentQuestionIndex].name} here`}
+          </label>
+        </div>
       </div>
     </div>
   );

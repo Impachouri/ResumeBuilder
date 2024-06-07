@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { useContext, useEffect, useState } from "react";
-import { AppContext, AppContextStateType } from "../../../context/appContext";
+import { useContext, useState } from "react";
+import { AppContext, ExperienceType } from "../../../context/appContext";
 import {
   FormButton,
   FormChecked,
@@ -9,23 +9,34 @@ import {
 import { MdCancel } from "react-icons/md";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
+import { saveExperience, updateExperience } from "../../../service/appApi";
+import { ApiContext } from "../../../context/apiContext";
+import {
+  FETCH_ERROR,
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
+} from "../../../context/constant";
+import notification from "../../../utils/notification";
 
 const ExperienceForm = () => {
   const {
     state: appState,
-    dispatch,
+    dispatch: appDispatch,
     activeSection,
-  } = useContext(AppContext) as AppContextStateType;
-  const experiences = appState["experience"];
+    resumeProfile,
+  } = useContext(AppContext);
+  const { dispatch: apiDispatch } = useContext(ApiContext);
   const [activeExperience, setActiveExperience] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
+  const experiences = appState.experience;
+  const notify = notification();
 
   const handleEndDateDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setEndDateDisabled(checked);
     const name = "end_date";
     const value = "Present";
-    dispatch({
+    appDispatch({
       type: "EXPERIENCE",
       data: { name: name, value: value, index: activeExperience },
     });
@@ -35,7 +46,7 @@ const ExperienceForm = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.currentTarget;
-    dispatch({
+    appDispatch({
       type: "EXPERIENCE",
       data: { name: name, value: value, index: activeExperience },
     });
@@ -45,7 +56,7 @@ const ExperienceForm = () => {
     const name = "responsibilities";
     const value = content;
 
-    dispatch({
+    appDispatch({
       type: "EXPERIENCE",
       data: { name: name, value: value, index: activeExperience },
     });
@@ -53,7 +64,7 @@ const ExperienceForm = () => {
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch({ type: "ADD_EXPERIENCE" });
+    appDispatch({ type: "ADD_EXPERIENCE" });
   };
 
   const handleRemove = (
@@ -61,10 +72,39 @@ const ExperienceForm = () => {
     index: number
   ) => {
     e.preventDefault();
-    dispatch({ type: "REMOVE_EXPERIENCE", data: { index: index } });
+    appDispatch({ type: "REMOVE_EXPERIENCE", data: { index: index } });
   };
 
-  useEffect(() => setActiveExperience(experiences.length - 1), [experiences]);
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    apiDispatch({ type: FETCH_REQUEST });
+    try {
+      const data = appState.experience[activeExperience];
+      let response;
+      if (data._id) {
+        response = await updateExperience(data, data._id);
+      } else {
+        response = await saveExperience(data, resumeProfile);
+        appDispatch({
+          type: "EXPERIENCE",
+          data: {
+            name: "_id",
+            value: response.data._id as string,
+            index: activeExperience,
+          },
+        });
+      }
+      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
+      console.log("Success", response);
+      notify(response.message, "SUCCESS");
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
+
+  // useEffect(() => setActiveExperience(experiences.length - 1), [experiences]);
 
   return (
     <ErrorBoundary
@@ -74,7 +114,7 @@ const ExperienceForm = () => {
         <div className="flex flex-wrap gap-6 mb-6">
           <h2 className="uppercase text-3xl font-bold">{activeSection}</h2>
           <div className="flex flex-wrap gap-1 justify-center">
-            {experiences.map((_, index: number) => (
+            {experiences.map((_: ExperienceType, index: number) => (
               <div
                 key={uuidv4()}
                 className={`flex item-center gap-2 border-1 rounded-lg border-solid p-2  ${
@@ -148,12 +188,18 @@ const ExperienceForm = () => {
                   />
                 )
             )}
-            {/* <TextEditor label="Responsibility" id="responsibilities" value={experiences[activeExperience]['responsibilities']} handleTextArea={ handleTextArea }/> */}
-            <FormButton
-              label="Add"
-              id="addExperience"
-              handleClick={handleAdd}
-            />
+            <div className="flex flex-row justify-end">
+              <FormButton
+                label="Add"
+                id="addExperience"
+                handleClick={handleAdd}
+              />
+              <FormButton
+                label="Save"
+                id="saveExperience"
+                handleClick={handleSave}
+              />
+            </div>
           </form>
         )}
       </div>
