@@ -11,31 +11,25 @@ import FormLink from "../../AppForm/FormLink";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
 import { ApiContext } from "../../../context/apiContext";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import notification from "../../../utils/notification";
-import { saveProject } from "../../../service/appApi";
+import ResumeAPI from "../../../service/appApi";
 
 const ProjectForm = () => {
   const {
     state: appState,
-    dispatch,
+    dispatch: appDispatch,
     activeSection,
+    resumeProfile,
   } = useContext(AppContext) as AppContextStateType;
   const { dispatch: apiDispatch } = useContext(ApiContext);
 
   const projects = appState["projects"];
   const [activeProject, setActiveProject] = useState<number>(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
-  const notify = notification();
 
   const handleEndDateDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setEndDateDisabled(checked);
-    dispatch({
+    appDispatch({
       type: "PROJECTS",
       data: { name: "end_date", value: "Present", index: activeProject },
     });
@@ -45,14 +39,14 @@ const ProjectForm = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.currentTarget;
-    dispatch({
+    appDispatch({
       type: "PROJECTS",
       data: { name: name, value: value, index: activeProject },
     });
   };
 
   const handleTextArea = (content: string) => {
-    dispatch({
+    appDispatch({
       type: "PROJECTS",
       data: { name: "description", value: content, index: activeProject },
     });
@@ -60,7 +54,7 @@ const ProjectForm = () => {
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch({ type: "ADD_PROJECT" });
+    appDispatch({ type: "ADD_PROJECT" });
   };
 
   const handleRemove = (
@@ -68,26 +62,38 @@ const ProjectForm = () => {
     index: number
   ) => {
     e.preventDefault();
-    dispatch({ type: "REMOVE_PROJECT", data: { index: index } });
+    appDispatch({ type: "REMOVE_PROJECT", data: { index: index } });
   };
-
   const handleSave = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.projects[activeProject];
+    let response;
     try {
-      const data = appState.projects[activeProject];
-      const response = await saveProject(data);
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
+      if (data._id) {
+        response = await ResumeAPI.update(
+          `resume/project/${data._id}`,
+          data,
+          apiDispatch
+        );
+      } else {
+        response = await ResumeAPI.create(
+          `resume/project/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
+        appDispatch({
+          type: "PROJECTS",
+          data: {
+            name: "_id",
+            value: response.data._id,
+            index: activeProject,
+          },
+        });
+      }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
-      console.log("Error");
-      notify(errorMessage, "ERROR");
+      console.log(error);
     }
   };
 

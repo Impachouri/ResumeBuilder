@@ -72,6 +72,10 @@ export const initialState: AppStateType = {
       grade: "Percentage - 68.38%",
     },
   ],
-  skills: " ",
-  achievements: "4TH Rank in Webster (Avishkar Event of MNNIT).",
+  skills: {
+    summary: "",
+  },
+  achievements: {
+    summary: "4TH Rank in Webster (Avishkar Event of MNNIT).",
+  },
 };

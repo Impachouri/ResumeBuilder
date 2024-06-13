@@ -8,13 +8,7 @@ import {
 import FormLink from "../../AppForm/FormLink";
 import { ErrorBoundary } from "react-error-boundary";
 import { ApiContext } from "../../../context/apiContext";
-import notification from "../../../utils/notification";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import { savePersonalInfo, updatePersonalInfo } from "../../../service/appApi";
+import ResumeAPI from "../../../service/appApi";
 
 const PersonalInfoForm = () => {
   const {
@@ -25,8 +19,7 @@ const PersonalInfoForm = () => {
   } = useContext(AppContext) as AppContextStateType;
   const { dispatch: apiDispatch } = useContext(ApiContext);
 
-  const personalInfo = appState["personalInfo"];
-  const notify = notification();
+  const personalInfo = appState.personalInfo;
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -38,29 +31,28 @@ const PersonalInfoForm = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.personalInfo;
+    let response;
     try {
-      const data = appState.personalInfo;
-      let response;
       if (data._id) {
-        response = await updatePersonalInfo(data, data._id);
+        response = await ResumeAPI.update(
+          `resume/personal-info/${data._id}`,
+          data,
+          apiDispatch
+        );
       } else {
-        response = await savePersonalInfo(data, resumeProfile);
+        response = await ResumeAPI.create(
+          `resume/personal-info/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
         appDispatch({
           type: "PERSONAL_INFO",
           data: { name: "_id", value: response.data._id },
         });
       }
-
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
-      console.log("Error");
-      notify(errorMessage, "ERROR");
+      console.log(error);
     }
   };
 

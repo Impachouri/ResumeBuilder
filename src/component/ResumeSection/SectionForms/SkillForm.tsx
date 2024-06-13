@@ -5,25 +5,19 @@ import { useContext } from "react";
 import { AppContext, AppContextStateType } from "../../../context/appContext";
 import TextEditor from "../../TextEditor/TextEditor";
 import { ApiContext } from "../../../context/apiContext";
-import notification from "../../../utils/notification";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import { saveSkill } from "../../../service/appApi";
 import { FormButton } from "../../AppForm/FormComponents";
+import ResumeAPI from "../../../service/appApi";
 
 const SkillForm = () => {
   const {
     state: appState,
-    dispatch,
+    dispatch: appDispatch,
     activeSection,
+    resumeProfile,
   } = useContext(AppContext) as AppContextStateType;
   const { dispatch: apiDispatch } = useContext(ApiContext);
 
   const skills = appState["skills"];
-  const notify = notification();
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
   //   const { name, value } = e.currentTarget;
   //   console.log(name, value)
@@ -31,9 +25,9 @@ const SkillForm = () => {
   // }
 
   const handleTextArea = (content: string) => {
-    dispatch({
+    appDispatch({
       type: "SKILLS",
-      data: { name: "responsibilities", value: content },
+      data: { name: "summary", value: content },
     });
   };
 
@@ -41,19 +35,31 @@ const SkillForm = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.skills;
+    let response;
     try {
-      const data = appState.skills;
-      const response = await saveSkill(data);
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
+      if (data._id) {
+        response = await ResumeAPI.update(
+          `resume/skill/${data._id}`,
+          data,
+          apiDispatch
+        );
+      } else {
+        response = await ResumeAPI.create(
+          `resume/skill/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
+        appDispatch({
+          type: "ACHIEVEMENTS",
+          data: {
+            name: "_id",
+            value: response.data._id,
+          },
+        });
+      }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
-      console.log("Error");
-      notify(errorMessage, "ERROR");
+      console.log(error);
     }
   };
 
@@ -68,8 +74,8 @@ const SkillForm = () => {
         <form className="flex flex-col gap-7">
           <TextEditor
             label=""
-            id="responsibilities"
-            value={skills}
+            id="summary"
+            value={skills.summary}
             handleTextArea={handleTextArea}
           />
           <FormButton label="Save" id="saveSkill" handleClick={handleSave} />

@@ -4,22 +4,17 @@ import { ErrorBoundary } from "react-error-boundary";
 import TextEditor from "../../TextEditor/TextEditor";
 import { FormButton } from "../../AppForm/FormComponents";
 import { ApiContext } from "../../../context/apiContext";
-import notification from "../../../utils/notification";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import { saveAchievement } from "../../../service/appApi";
+import ResumeAPI from "../../../service/appApi";
+// import { saveAchievement } from "../../../service/appApi";
 
 const AchievementForm = () => {
   const {
     state: appState,
-    dispatch,
+    dispatch: appDispatch,
     activeSection,
+    resumeProfile,
   } = useContext(AppContext) as AppContextStateType;
   const { dispatch: apiDispatch } = useContext(ApiContext);
-  const notify = notification();
   const achievements = appState["achievements"];
 
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -28,9 +23,9 @@ const AchievementForm = () => {
   // }
 
   const handleTextArea = (content: string) => {
-    dispatch({
+    appDispatch({
       type: "ACHIEVEMENTS",
-      data: { name: "achievements", value: content },
+      data: { name: "summary", value: content },
     });
   };
 
@@ -38,19 +33,31 @@ const AchievementForm = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.achievements;
+    let response;
     try {
-      const data = appState.achievements;
-      const response = await saveAchievement(data);
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
+      if (data._id) {
+        response = await ResumeAPI.update(
+          `resume/achievement/${data._id}`,
+          data,
+          apiDispatch
+        );
+      } else {
+        response = await ResumeAPI.create(
+          `resume/achievement/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
+        appDispatch({
+          type: "ACHIEVEMENTS",
+          data: {
+            name: "_id",
+            value: response.data._id,
+          },
+        });
+      }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
-      console.log("Error");
-      notify(errorMessage, "ERROR");
+      console.log(error);
     }
   };
 
@@ -65,8 +72,8 @@ const AchievementForm = () => {
         <form className="flex flex-col gap-7">
           <TextEditor
             label=""
-            id="achievements"
-            value={achievements}
+            id="summary"
+            value={achievements.summary}
             handleTextArea={handleTextArea}
           />
           <FormButton

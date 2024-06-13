@@ -9,22 +9,16 @@ import {
 import { MdCancel } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 import { ApiContext } from "../../../context/apiContext";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import { saveEducation } from "../../../service/appApi";
-import notification from "../../../utils/notification";
+import ResumeAPI from "../../../service/appApi";
 
 const EducationForm = () => {
   const {
     state: appState,
-    dispatch,
+    dispatch: appDispatch,
     activeSection,
+    resumeProfile,
   } = useContext(AppContext) as AppContextStateType;
   const { dispatch: apiDispatch } = useContext(ApiContext);
-  const notify = notification();
   const educations = appState["education"];
   const [activeEducation, setActiveEducation] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
@@ -32,11 +26,11 @@ const EducationForm = () => {
   const handleEndDateDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setEndDateDisabled(checked);
-    dispatch({
+    appDispatch({
       type: "EDUCATION",
       data: { name: "end_date", value: "Present", index: activeEducation },
     });
-    dispatch({
+    appDispatch({
       type: "EDUCATION",
       data: { name: "grade", value: "", index: activeEducation },
     });
@@ -46,7 +40,7 @@ const EducationForm = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.currentTarget;
-    dispatch({
+    appDispatch({
       type: "EDUCATION",
       data: { name: name, value: value, index: activeEducation },
     });
@@ -54,7 +48,7 @@ const EducationForm = () => {
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    dispatch({ type: "ADD_EDUCATION" });
+    appDispatch({ type: "ADD_EDUCATION" });
   };
 
   const handleRemove = (
@@ -62,30 +56,42 @@ const EducationForm = () => {
     index: number
   ) => {
     e.preventDefault();
-    dispatch({ type: "REMOVE_EDUCATION", data: { index: index } });
+    appDispatch({ type: "REMOVE_EDUCATION", data: { index: index } });
   };
-
   const handleSave = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.education[activeEducation];
+    let response;
     try {
-      const data = appState.education[activeEducation];
-      const response = await saveEducation(data);
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
+      if (data._id) {
+        response = await ResumeAPI.update(
+          `resume/education/${data._id}`,
+          data,
+          apiDispatch
+        );
+      } else {
+        response = await ResumeAPI.create(
+          `resume/education/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
+        appDispatch({
+          type: "EDUCATION",
+          data: {
+            name: "_id",
+            value: response.data._id,
+            index: activeEducation,
+          },
+        });
+      }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      apiDispatch({ type: FETCH_ERROR, payload: errorMessage });
-      console.log("Error");
-      notify(errorMessage, "ERROR");
+      console.log(error);
     }
   };
 
-  // useEffect(() => setActiveEducation(educations.length - 1), [educations]);
+  useEffect(() => setActiveEducation(educations.length - 1), [educations]);
 
   return (
     <ErrorBoundary

@@ -220,13 +220,19 @@ export const appReducer: Reducer<AppStateType, AppActionType> = (
     case "SKILLS":
       return {
         ...state,
-        ["skills"]: action.data.value,
+        ["skills"]: {
+          ...state.skills,
+          [action.data.name]: action.data.value,
+        },
       };
 
     case "ACHIEVEMENTS":
       return {
         ...state,
-        ["achievements"]: action.data.value,
+        ["achievements"]: {
+          ...state.achievements,
+          [action.data.name]: action.data.value,
+        },
       };
     default:
       return state;

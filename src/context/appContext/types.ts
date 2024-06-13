@@ -115,6 +115,16 @@ type PersonalInfoType = {
   };
 };
 
+type SkillType = {
+  summary: string;
+  _id?: string;
+};
+
+type AchievementType = {
+  summary: string;
+  _id?: string;
+};
+
 type AppStateType = {
   personalInfo: PersonalInfoType;
 
@@ -124,16 +134,18 @@ type AppStateType = {
 
   education: Array<EducationType>;
 
-  skills: string;
+  skills: SkillType;
 
-  achievements: string;
+  achievements: AchievementType;
 };
 
 export type {
+  AppStateType,
   LinkType,
   ExperienceType,
   ProjectType,
   EducationType,
-  AppStateType,
   PersonalInfoType,
+  SkillType,
+  AchievementType,
 };

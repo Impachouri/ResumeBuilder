@@ -9,14 +9,8 @@ import {
 import { MdCancel } from "react-icons/md";
 import TextEditor from "../../TextEditor/TextEditor";
 import { v4 as uuidv4 } from "uuid";
-import { saveExperience, updateExperience } from "../../../service/appApi";
 import { ApiContext } from "../../../context/apiContext";
-import {
-  FETCH_ERROR,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-} from "../../../context/constant";
-import notification from "../../../utils/notification";
+import ResumeAPI from "../../../service/appApi";
 
 const ExperienceForm = () => {
   const {
@@ -29,7 +23,6 @@ const ExperienceForm = () => {
   const [activeExperience, setActiveExperience] = useState(0);
   const [endDateDisabled, setEndDateDisabled] = useState(false);
   const experiences = appState.experience;
-  const notify = notification();
 
   const handleEndDateDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -79,32 +72,34 @@ const ExperienceForm = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    apiDispatch({ type: FETCH_REQUEST });
+    const data = appState.experience[activeExperience];
+    let response;
     try {
-      const data = appState.experience[activeExperience];
-      let response;
       if (data._id) {
-        response = await updateExperience(data, data._id);
+        response = await ResumeAPI.update(
+          `resume/experience/${data._id}`,
+          data,
+          apiDispatch
+        );
       } else {
-        response = await saveExperience(data, resumeProfile);
+        response = await ResumeAPI.create(
+          `resume/experience/${resumeProfile}`,
+          data,
+          apiDispatch
+        );
         appDispatch({
           type: "EXPERIENCE",
           data: {
             name: "_id",
-            value: response.data._id as string,
+            value: response.data._id,
             index: activeExperience,
           },
         });
       }
-      apiDispatch({ type: FETCH_SUCCESS, payload: response.data });
-      console.log("Success", response);
-      notify(response.message, "SUCCESS");
     } catch (error) {
-      console.log("error ", error);
+      console.log(error);
     }
   };
-
-  // useEffect(() => setActiveExperience(experiences.length - 1), [experiences]);
 
   return (
     <ErrorBoundary

@@ -31,18 +31,18 @@ const changeDate = (date: string) => {
 };
 
 export const PersonalInfo: React.FC = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={` items-center ${defaultCss.sectionContainer}`}>
       <h2 className={`text-xl ${defaultCss.sectionMainHeading}`}>
-        {apiState["personalInfo"].fname} {apiState["personalInfo"].lname}
+        {appState["personalInfo"].fname} {appState["personalInfo"].lname}
       </h2>
       <div className={`flex gap-3 ${defaultCss.sectionSubHeading}`}>
-        <p className="">{apiState["personalInfo"].phone}</p>
+        <p className="">{appState["personalInfo"].phone}</p>
         <span>|</span>
-        <p className="">{apiState["personalInfo"].email}</p>
-        {apiState["personalInfo"].links.map((link: LinkType) => (
+        <p className="">{appState["personalInfo"].email}</p>
+        {appState["personalInfo"].links.map((link: LinkType) => (
           <div key={uuidv4()} className="flex gap-3">
             <span>|</span>
             <a
@@ -56,19 +56,19 @@ export const PersonalInfo: React.FC = () => {
         ))}
       </div>
       <div className={defaultCss.border}></div>
-      <p className="">{apiState["personalInfo"].profileSummary}</p>
+      <p className="">{appState["personalInfo"].profileSummary}</p>
     </div>
   );
 };
 
 export const Experience: React.FC = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>PROFESSIONAL EXPERIENCE</h4>
       <div className={defaultCss.border}></div>
-      {apiState["experience"].map((job: ExperienceType) => (
+      {appState["experience"].map((job: ExperienceType) => (
         <div key={uuidv4()}>
           <div className="flex justify-between">
             <h4 className={defaultCss.sectionSubHeading}>{job.company}</h4>
@@ -95,12 +95,12 @@ export const Experience: React.FC = () => {
 };
 
 export const Projects: React.FC = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>PROJECTS</h4>
       <div className={defaultCss.border}></div>
-      {apiState["projects"].map((project: ProjectType) => (
+      {appState["projects"].map((project: ProjectType) => (
         <div key={uuidv4()}>
           <div className="flex justify-between">
             {project.liveLink ? (
@@ -154,13 +154,13 @@ export const Projects: React.FC = () => {
 };
 
 export const Education: React.FC = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
       <h4 className={defaultCss.sectionMainHeading}>EDUCATION</h4>
       <div className={defaultCss.border}></div>
-      {apiState["education"].map((edu: EducationType) => (
+      {appState["education"].map((edu: EducationType) => (
         <div key={uuidv4()} className="edu">
           <div className="flex justify-between">
             <h4 className={defaultCss.sectionHeading}>{edu.institution}</h4>
@@ -183,7 +183,7 @@ export const Education: React.FC = () => {
 };
 
 export const TechnicalSkills = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
@@ -192,11 +192,11 @@ export const TechnicalSkills = () => {
       <div
         className="pl-[15px] resume-order-list"
         dangerouslySetInnerHTML={{
-          __html: sanitizedHtml(apiState["skills"]),
+          __html: sanitizedHtml(appState.skills.summary),
         }}
       ></div>
       {/* <ul className="pl-[15px]">
-            {apiState['skills'].split("\n").map((responsibility:string) => (
+            {appState['skills'].split("\n").map((responsibility:string) => (
               <li key={uuidv4()}>{responsibility}</li>
             ))}
           </ul> */}
@@ -205,7 +205,7 @@ export const TechnicalSkills = () => {
 };
 
 export const Achievements = () => {
-  const { state: apiState } = useContext(AppContext) as AppContextStateType;
+  const { state: appState } = useContext(AppContext) as AppContextStateType;
 
   return (
     <div className={defaultCss.sectionContainer}>
@@ -214,10 +214,10 @@ export const Achievements = () => {
       <div
         className="pl-[15px] resume-order-list"
         dangerouslySetInnerHTML={{
-          __html: sanitizedHtml(apiState["achievements"]),
+          __html: sanitizedHtml(appState.achievements.summary),
         }}
       ></div>
-      {/* <p>{apiState['achievements']}</p> */}
+      {/* <p>{appState['achievements']}</p> */}
     </div>
   );
 };
