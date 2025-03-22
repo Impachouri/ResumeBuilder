@@ -33,14 +33,16 @@ const TextEditor = ({ label, id, value, handleTextArea }: EditorProps) => {
   }, [value]);
 
   return (
-    <div className="form form-textarea">
-      <label
-        htmlFor={id}
-        className="mb-2 text-xl font-medium text-gray-900 dark:text-white"
-      >
-        {label}
-      </label>
-      <div className="grid place-items-center m-5 mb-10">
+    <div className="form form-textarea mb-5">
+      <div className="flex items-center gap-5">
+        <label
+          htmlFor={id}
+          className="mb-1 text-2xl font-medium text-gray-900 "
+        >
+          {label}
+        </label>
+      </div>
+      <div className="grid place-items-center">
         <ReactQuill
           theme="snow"
           modules={modules}

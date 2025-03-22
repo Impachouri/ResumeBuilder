@@ -27,6 +27,8 @@ import "./App.css";
 export interface ResumeSectionData {
   id: keyof AppStateType;
   title: string;
+  heading: string;
+  subHeading: string;
   component: React.ReactNode;
   order: number;
   Icon: IconType;
@@ -37,6 +39,7 @@ const Resume: React.FC = () => {
   const [dragId, setDragId] = useState<string | undefined>();
   const [fontFamily, setFontFamily] = useState<string>("font-sans");
   const [fontSize, setFontSize] = useState<number>(10);
+
   const { activeSection, setActiveSection } = useContext(
     AppContext
   ) as AppContextStateType;
@@ -47,6 +50,8 @@ const Resume: React.FC = () => {
     {
       id: "personalInfo",
       title: "Personal Info",
+      heading: "Let's start with the basics!",
+      subHeading: "Tell us who you are and how employers can reach you.",
       order: 1,
       component: <PersonalInfo />,
       Icon: FaUser,
@@ -54,6 +59,8 @@ const Resume: React.FC = () => {
     {
       id: "experience",
       title: "Experience",
+      heading: "Tell us about your most recent job!",
+      subHeading: "We’ll start here and work backward.",
       order: 2,
       component: <Experience />,
       Icon: FaBriefcase,
@@ -61,6 +68,8 @@ const Resume: React.FC = () => {
     {
       id: "projects",
       title: "Projects",
+      heading: "Showcase the projects you're proud of!",
+      subHeading: "Highlight work that demonstrates your skills.",
       order: 3,
       component: <Projects />,
       Icon: FaCode,
@@ -68,13 +77,18 @@ const Resume: React.FC = () => {
     {
       id: "education",
       title: "Education",
+      heading: "Where did you learn your skills?",
+      subHeading: "List your degrees, certifications, or relevant courses.",
       order: 4,
       component: <Education />,
       Icon: FaGraduationCap,
     },
     {
       id: "skills",
-      title: "Technical Skills",
+      title: "Skills",
+      heading: "What tools & technologies do you excel at?",
+      subHeading:
+        "List programming languages, frameworks, and software expertise.",
       order: 5,
       component: <TechnicalSkills />,
       Icon: MdOutlineMilitaryTech,
@@ -82,14 +96,16 @@ const Resume: React.FC = () => {
     {
       id: "achievements",
       title: "Achievements",
+      heading: "Show off your proudest moments!",
+      subHeading: "Highlight awards, recognitions, or key milestones.",
       order: 6,
       component: <Achievements />,
       Icon: GrAchievement,
     },
   ]);
 
-  const fontFamilyOption: string[] = ["font-sans", "font-serif", "font-mono"];
-  const fontOption = ["10", "12", "14", "16"];
+  // const fontFamilyOption: string[] = ["font-sans", "font-serif", "font-mono"];
+  // const fontOption = ["10", "12", "14", "16"];
 
   const handleActiveSession = (sectionId: keyof AppStateType) => {
     setActiveSection((prevActiveSection: keyof AppStateType) => {
@@ -131,9 +147,13 @@ const Resume: React.FC = () => {
   }, [state]);
 
   return (
-    <div className="w-screen h-full text-black flex flex-col mt-36  lg:flex-row">
-      <div className="flex flex-col w-full lg:w-[50%]  border-solid border-r-2 p-5 gap-5 h-screen  overflow-y-scroll">
-        <div className="grid gap-4 grid-cols-2  lg:grid-cols-4">
+    <div className="grid grid-cols-6 gap-4 text-black  m-5 ">
+      {/* Section Header */}
+      <div className="col-span-1 border-solid border-r-2 p-5  flex flex-col gap-5">
+        <div className="text-4xl font-extrabold pb-10 self-center  text-black">
+          Resume
+        </div>
+        <div className="flex flex-col gap-4   lg:grid-cols-4">
           {sections
             .sort((a, b) => a.order - b.order)
             .map((section, index) => (
@@ -149,64 +169,19 @@ const Resume: React.FC = () => {
               />
             ))}
         </div>
-        <div className="flex flex-wrap gap-9 text-xl place-items-center ">
-          <div className="flex gap-5">
-            <label htmlFor="font-family" className="font-semibold">
-              Font family
-            </label>
-            <select
-              name="font-family"
-              id="font-family"
-              className="rounded-md focus:outline-none focus:ring p-1"
-              onChange={(e) => setFontFamily(e.target.value)}
-            >
-              {fontFamilyOption.map((font) => (
-                <option key={font} value={font}>
-                  {font}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex gap-5">
-            <label htmlFor="font-family" className="font-semibold">
-              Font Options
-            </label>
-            <select
-              name="font-option"
-              id="font-option"
-              className="rounded-md focus:outline-none focus:ring p-1"
-              onChange={(e) => setFontSize(parseInt(e.target.value))}
-            >
-              {fontOption.map((font) => (
-                <option key={font} value={font}>
-                  {font}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* <div className="flex gap-5 font-semibold place-items-center">
-              <label htmlFor="color">Colors</label>
-              <div className="flex gap-2 place-items-center">
-                {fontOption.map((option, index) => (
-                  <button
-                    key={index}
-                    className={`rounded-full border-2  ${
-                      fontSize === option ? 'w-9 h-9' : 'w-7 h-7'
-                    }`}
-                    style={{ backgroundColor: optionColor }}
-                    onClick={() => setColor(optionColor)}
-                  />
-                ))}
-              </div>
-            </div> */}
-        </div>
+      </div>
+
+      {/* Section Form */}
+      <div className="col-span-3 m-10">
         <RenderSectionForm />
       </div>
-      <div className="overflow-y-scroll lg:w-[50%] h-screen">
+
+      {/* preview */}
+      <div className="col-span-2 flex justify-end items-center h-screen">
         <div
           ref={resumeRef}
+          className={`bg-white rounded-2xl p-5 shadow-lg overflow-auto max-h-[90vh] w-full max-w-[400px] ${fontFamily} text-[5px]`}
           style={{ perspective: 2000 }}
-          className={`flex-1 items-center justify-center bg-white rounded-2xl p-5 ${fontFamily} text-[${fontSize}px] `}
         >
           <ResumeTemplate sections={sections} />
         </div>

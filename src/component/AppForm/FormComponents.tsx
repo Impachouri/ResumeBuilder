@@ -1,10 +1,10 @@
 type FormInputProps = {
-  type: string;
+  type?: string;
   label: string;
   id: string;
   defaultValue: string;
   endDateDisabled?: boolean;
-  handleInputChange: (
+  handleInputChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 };
@@ -18,7 +18,7 @@ type FormCheckedProps = {
 type FormButtonProps = {
   label: string;
   id: string;
-  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 type FormLinkProps = {
@@ -32,13 +32,13 @@ type FormLinkProps = {
 };
 
 const defaultCss = {
-  div: "flex flex-col gap-2",
-  label: "mb-2 text-xl font-medium text-gray-900 ",
+  div: "flex flex-col gap-1",
+  label: "text-xl font-medium text-gray-900 ",
   input:
-    "bg-gray-50 w-full focus:outline-none focus:ring text-gray-900 text-lg rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+    "bg-gray-50 w-full focus:outline-none focus:ring text-gray-900 text-lg rounded-lg p-2.5 ",
   buttonDiv: "flex justify-end gap-5 m-8",
   button:
-    "border-3 bg-primary text-xl font-medium text-white py-2 px-5 rounded-lg",
+    "border-3 bg-primary text-xl font-medium text-white py-2 px-5 rounded-lg mt-5",
 };
 
 export const FormInput = ({
@@ -73,8 +73,8 @@ export const FormChecked = ({
   handleEndDateDisable,
 }: FormCheckedProps) => {
   return (
-    <div className="flex flex-row gap-9 items-center mt-2">
-      <label htmlFor={id} className="mb-2 text-2xl font-medium text-gray-900">
+    <div className="flex flex-row gap-9 items-center mt-2 self-end">
+      <label htmlFor={id} className="mb-2 text-xl font-medium text-gray-900">
         {label}
       </label>
       <input
