@@ -10,7 +10,7 @@ const SkillForm = () => {
   const {
     state: apiState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
   const skills = apiState["skills"];
   const tips = [

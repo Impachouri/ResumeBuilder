@@ -20,9 +20,17 @@ const useAiAssistant = () => {
     try {
       const res = await axios.post("https://www.google.com/", { input });
       setAiState({ response: res.data, error: "", loading: false });
-    } catch (error: any) {
-      setAiState({ response: "", error: error.message, loading: false });
-      console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setAiState({ response: "", error: error.message, loading: false });
+      } else {
+        setAiState({
+          response: "",
+          error: "An unknown error occurred",
+          loading: false,
+        });
+        console.error(error);
+      }
     }
   };
 

@@ -9,7 +9,7 @@ const PersonalInfoForm = () => {
   const {
     state: appState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
 
   const personalInfo = appState["personalInfo"];
@@ -40,6 +40,7 @@ const PersonalInfoForm = () => {
           </h3>
           <Modal
             label="Tips"
+            tipMessage="Tips to optimize the resume"
             icon={<FaRegLightbulb className="text-3xl cursor-pointer" />}
           >
             <ul className="list-disc pl-5 space-y-2">

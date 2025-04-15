@@ -10,7 +10,7 @@ const AchievementForm = () => {
   const {
     state: appState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
   const achievements = appState["achievements"];
 

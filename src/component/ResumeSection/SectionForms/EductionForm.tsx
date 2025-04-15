@@ -14,7 +14,7 @@ const EducationForm = () => {
   const {
     state: apiState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
   const educations = apiState["education"];
   const [activeEducation, setActiveEducation] = useState(0);
@@ -76,6 +76,7 @@ const EducationForm = () => {
           </h3>
           <Modal
             label={"Tips"}
+            tipMessage="Tips to optimize the resume"
             icon={<FaRegLightbulb className="text-3xl cursor-pointer" />}
           >
             <ul className="list-disc pl-5 space-y-2">

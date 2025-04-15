@@ -18,7 +18,7 @@ const ProjectForm = () => {
   const {
     state: appState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
   const projects = appState["projects"];
   const [activeProject, setActiveProject] = useState<number>(0);

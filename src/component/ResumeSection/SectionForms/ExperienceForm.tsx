@@ -17,7 +17,7 @@ const ExperienceForm = () => {
   const {
     state: appState,
     dispatch,
-    activeSection,
+    // activeSection,
   } = useContext(AppContext) as AppContextStateType;
   const experiences = appState["experience"];
   const tips = [

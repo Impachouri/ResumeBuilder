@@ -37,8 +37,6 @@ export interface ResumeSectionData {
 const Resume: React.FC = () => {
   const resumeRef = useRef(null);
   const [dragId, setDragId] = useState<string | undefined>();
-  const [fontFamily, setFontFamily] = useState<string>("font-sans");
-  const [fontSize, setFontSize] = useState<number>(10);
 
   const { activeSection, setActiveSection } = useContext(
     AppContext
@@ -103,9 +101,6 @@ const Resume: React.FC = () => {
       Icon: GrAchievement,
     },
   ]);
-
-  // const fontFamilyOption: string[] = ["font-sans", "font-serif", "font-mono"];
-  // const fontOption = ["10", "12", "14", "16"];
 
   const handleActiveSession = (sectionId: keyof AppStateType) => {
     setActiveSection((prevActiveSection: keyof AppStateType) => {
@@ -180,7 +175,7 @@ const Resume: React.FC = () => {
       <div className="col-span-2 flex justify-end items-center h-screen">
         <div
           ref={resumeRef}
-          className={`bg-white rounded-2xl p-5 shadow-lg overflow-auto max-h-[90vh] w-full max-w-[400px] ${fontFamily} text-[5px]`}
+          className={`bg-white rounded-2xl p-5 shadow-lg overflow-auto max-h-[90vh] w-full max-w-[400px] text-[5px]`}
           style={{ perspective: 2000 }}
         >
           <ResumeTemplate sections={sections} />
