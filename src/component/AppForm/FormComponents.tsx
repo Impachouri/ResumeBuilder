@@ -118,7 +118,12 @@ export const FormTextArea = ({
 export const FormButton = ({ label, id, handleClick }: FormButtonProps) => {
   return (
     <div className={defaultCss.buttonDiv}>
-      <button className={defaultCss.button} id={id} onClick={handleClick}>
+      <button
+        type="button"
+        className={defaultCss.button}
+        id={id}
+        onClick={handleClick}
+      >
         {label}
       </button>
     </div>

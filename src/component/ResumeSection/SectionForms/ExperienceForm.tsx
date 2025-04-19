@@ -169,20 +169,14 @@ const ExperienceForm = () => {
             handleEndDateDisable={handleEndDateDisable}
           />
           <div className="relative flex ">
-            {experiences.map(
-              (experience, index) =>
-                activeExperience === index && (
-                  <div key={index} className="relative">
-                    <TextEditor
-                      key={index}
-                      label="Description"
-                      id="description"
-                      value={experience["responsibilities"]}
-                      handleTextArea={handleTextArea}
-                    />
-                  </div>
-                )
-            )}
+            <div className="relative">
+              <TextEditor
+                label="Description"
+                id="description"
+                value={experiences[activeExperience]["responsibilities"]}
+                handleTextArea={handleTextArea}
+              />
+            </div>
             <Modal
               tipMessage="Let AI assist you!"
               className="absolute left-36 items-center"
@@ -191,9 +185,15 @@ const ExperienceForm = () => {
                 <FaWandMagicSparkles className="text-purple-700 text-3xl" />
               }
             >
-              <AiAssistant
-                input={experiences[activeExperience]["responsibilities"]}
-              />
+              {(closeModal) => (
+                <AiAssistant
+                  input={experiences[activeExperience]["responsibilities"]}
+                  handleTextArea={(content) => {
+                    handleTextArea(content);
+                    closeModal();
+                  }}
+                />
+              )}
             </Modal>
           </div>
           <FormButton label="Add" id="addExperience" handleClick={handleAdd} />

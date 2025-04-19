@@ -1,36 +1,36 @@
-import axios from "axios";
 import { useState } from "react";
+import notification from "../utils/notification";
+import getAiResponse from "../service/aiAssistantApi";
 
 interface AiResponse {
   response: string;
-  error: string;
   loading: boolean;
 }
 
 const useAiAssistant = () => {
   const [aiState, setAiState] = useState<AiResponse>({
     response: "",
-    error: "",
     loading: false,
   });
+  const notify = notification();
 
-  const fetchResponse = async ({ input }: { input: string }) => {
+  const fetchResponse = async (input: string) => {
     setAiState((prev) => ({ ...prev, loading: true }));
 
     try {
-      const res = await axios.post("https://www.google.com/", { input });
-      setAiState({ response: res.data, error: "", loading: false });
+      const res = await getAiResponse(input);
+      setAiState({ response: res, loading: false });
+      return res;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setAiState({ response: "", error: error.message, loading: false });
+        notify(error.message, "ERROR");
+        setAiState({ response: "", loading: false });
       } else {
-        setAiState({
-          response: "",
-          error: "An unknown error occurred",
-          loading: false,
-        });
+        notify("An unknown error occurred", "ERROR");
+        setAiState({ response: "", loading: false });
         console.error(error);
       }
+      return "Something went wrong!!";
     }
   };
 

@@ -50,7 +50,7 @@ const TextEditor = ({ label, id, value, handleTextArea }: EditorProps) => {
           placeholder="write your content ...."
           onChange={handleProcedureContentChange}
           style={{ height: "220px", width: "500px" }}
-          defaultValue={editorContent}
+          value={editorContent}
           id={id}
         ></ReactQuill>
       </div>

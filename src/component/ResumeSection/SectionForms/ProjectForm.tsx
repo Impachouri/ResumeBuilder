@@ -158,18 +158,12 @@ const ProjectForm = () => {
           />
           <FormLink activeItem={activeProject} />
           <div className="relative flex ">
-            {projects.map(
-              (project, index: number) =>
-                activeProject === index && (
-                  <TextEditor
-                    key={index}
-                    label="Description"
-                    id="description"
-                    value={project["description"]}
-                    handleTextArea={handleTextArea}
-                  />
-                )
-            )}
+            <TextEditor
+              label="Description"
+              id="description"
+              value={projects[activeProject]["description"]}
+              handleTextArea={handleTextArea}
+            />
             <Modal
               tipMessage="Let AI assist you!"
               className="absolute left-36 items-center"
@@ -178,7 +172,15 @@ const ProjectForm = () => {
                 <FaWandMagicSparkles className="text-purple-700 text-3xl" />
               }
             >
-              <AiAssistant input={projects[activeProject]["description"]} />
+              {(closeModal) => (
+                <AiAssistant
+                  input={projects[activeProject]["description"]}
+                  handleTextArea={(content) => {
+                    handleTextArea(content);
+                    closeModal();
+                  }}
+                />
+              )}
             </Modal>
           </div>
 

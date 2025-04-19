@@ -22,7 +22,6 @@ import { FaBriefcase, FaCode, FaUser, FaGraduationCap } from "react-icons/fa";
 import { GrAchievement } from "react-icons/gr";
 import { MdOutlineMilitaryTech } from "react-icons/md";
 import "./App.css";
-// import { fetchResume } from "./service/appApi";
 
 export interface ResumeSectionData {
   id: keyof AppStateType;
@@ -142,13 +141,13 @@ const Resume: React.FC = () => {
   }, [state]);
 
   return (
-    <div className="grid grid-cols-6 gap-4 text-black  m-5 ">
+    <div className="grid grid-cols-6 text-black h-screen gap-8">
       {/* Section Header */}
-      <div className="col-span-1 border-solid border-r-2 p-5  flex flex-col gap-5">
+      <div className="col-span-1 border-solid border-r-2 rounded-r-2xl p-5  flex flex-col gap-5 ">
         <div className="text-4xl font-extrabold pb-10 self-center  text-black">
           Resume
         </div>
-        <div className="flex flex-col gap-4   lg:grid-cols-4">
+        <div className="flex flex-col gap-4 lg:grid-cols-4">
           {sections
             .sort((a, b) => a.order - b.order)
             .map((section, index) => (
@@ -167,15 +166,15 @@ const Resume: React.FC = () => {
       </div>
 
       {/* Section Form */}
-      <div className="col-span-3 m-10">
+      <div className="col-span-3 flex justify-end items-center">
         <RenderSectionForm />
       </div>
 
       {/* preview */}
-      <div className="col-span-2 flex justify-end items-center h-screen">
+      <div className="col-span-2 flex justify-end items-center">
         <div
           ref={resumeRef}
-          className={`bg-white rounded-2xl p-5 shadow-lg overflow-auto max-h-[90vh] w-full max-w-[400px] text-[5px]`}
+          className={`bg-white rounded-2xl p-5 shadow-lg overflow-auto max-h-[90vh]  max-w-[400px] text-[5px]`}
           style={{ perspective: 2000 }}
         >
           <ResumeTemplate sections={sections} />

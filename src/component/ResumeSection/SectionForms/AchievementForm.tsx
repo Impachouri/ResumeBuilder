@@ -66,7 +66,15 @@ const AchievementForm = () => {
             label="AI-Assistant"
             icon={<FaWandMagicSparkles className="text-purple-700 text-3xl" />}
           >
-            <AiAssistant input={achievements} />
+            {(closeModal) => (
+              <AiAssistant
+                input={achievements}
+                handleTextArea={(content) => {
+                  handleTextArea(content);
+                  closeModal();
+                }}
+              />
+            )}
           </Modal>
         </div>
       </form>

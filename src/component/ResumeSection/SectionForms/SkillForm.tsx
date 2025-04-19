@@ -65,7 +65,15 @@ const SkillForm = () => {
             label="AI-Assistant"
             icon={<FaWandMagicSparkles className="text-purple-700 text-3xl" />}
           >
-            <AiAssistant input={skills} />
+            {(closeModal) => (
+              <AiAssistant
+                input={skills}
+                handleTextArea={(content) => {
+                  handleTextArea(content);
+                  closeModal();
+                }}
+              />
+            )}
           </Modal>
         </div>
       </form>
